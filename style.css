@@ -7,3 +7,9 @@ body {
 h1 {
     color: #333;
 }
+.intro-ja, .intro-en {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.8;
+    text-align: center;
+}
