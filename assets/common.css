@@ -15,43 +15,33 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-
 .sidenav .logo{font-size:1.2rem; font-weight:800; margin:.2rem .2rem .6rem}
 .sidenav .sep{border-top:1px solid #ffffff22; margin:.5rem 0}
 
-/* 左帯リンク（既定：文字=淡色②=白） */
-.sidenav a {
-  display:block; text-decoration:none; padding:.5rem .6rem; border-radius:.4rem;
-  border:1px solid transparent; font-weight:600; color:#fff; outline:none;
-  background:var(--ink); /* デフォルト状態から帯色背景 */
+/* ── 左帯リンク：素直なルール ───────────────────────────── */
+/* ベース：いつでも「帯=濃色①」「文字=淡色②（白）」で読める */
+.sidenav a{
+  display:block; padding:.5rem .6rem; border-radius:.4rem;
+  border:1px solid transparent; font-weight:600;
+  text-decoration:none; outline:none;
+  background:var(--ink);   /* 帯の色 = 濃色① */
+  color:#fff;              /* 文字 = 淡色②（白） */
 }
-.sidenav a:visited { color:#fff }
+.sidenav a:visited{ color:#fff; }
 
-/* ホバーは少し明るく */
-.sidenav a:hover { background:#2a2a2a }
+/* ホバー：少し明るく（任意） */
+.sidenav a:hover{ background:#2a2a2a; }
 
-/* ★ アクティブの既定見た目：帯=濃色①そのまま、文字=淡色②(白) */
-.sidenav a.active {
+/* アクティブ：見た目はベースと同じ（強制上書きは不要） */
+.sidenav a.active{
   background:var(--ink);
   color:#fff;
-  border-color:transparent;
 }
 
-/* ★ フォーカス中：文字は白のまま、枠=淡色②(白)で強調 */
+/* フォーカス：枠だけ出す（色は変えない → 常に可読） */
 .sidenav a:focus,
-.sidenav a:focus-visible {
-  background:var(--ink);
-  color:#fff;                  /* 読める色に固定 */
-  outline:2px solid #fff;      /* 淡色②（白） */
+.sidenav a:focus-visible{
+  outline:2px solid #fff; /* 枠＝淡色②（白） */
   outline-offset:2px;
 }
-
-/* ★ アクティブかつフォーカス中も同様 */
-.sidenav a.active:focus,
-.sidenav a.active:focus-visible {
-  background:var(--ink);
-  color:#fff;                  /* 読める色に固定 */
-  outline:2px solid #fff;
-}
-
-/* クリック押下の一瞬の反転を穏やかに */
-.sidenav a:active { filter:brightness(1.05) }
+/* ─────────────────────────────────────────────── */
 
 /* 右側カラム */
 .layout .content{
