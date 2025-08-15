@@ -6,36 +6,19 @@
   <title>FIXLAG.ART</title>
   <link rel="stylesheet" href="/assets/common.css">
   <style>
-    /* --- Top cards (portal only) --- */
-    .cards{
-      display:grid; gap:14px;
-      grid-template-columns: 1fr; 
-    }
+    /* --- Portal top: cards --- */
+    .cards{ display:grid; gap:14px; grid-template-columns:1fr; }
     .card-link{
       display:block; background:#fff; border:1px solid var(--border);
       border-radius:14px; overflow:hidden; text-decoration:none; color:inherit;
       transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
     }
     .card-link:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.08); border-color:#dcdcdc; }
-    .card-link .thumb{
-      aspect-ratio: 16/9;
-      width:100%; object-fit:cover; display:block;
-      background:#eee;
-    }
-    .card-link .meta{
-      padding:12px 14px 13px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .card-link .title{
-      font-weight:800; letter-spacing:.2px;
-    }
-    .card-link .tag{
-      font-size:.8rem; padding:.2rem .5rem; border-radius:999px; border:1px solid #e5e5e5; background:#fafafa; color:#333;
-      flex:0 0 auto;
-    }
-    @media (min-width: 860px){
-      .cards{ grid-template-columns: repeat(3, 1fr); }
-    }
+    .card-link .thumb{ aspect-ratio:16/9; width:100%; object-fit:cover; display:block; background:#eee; }
+    .card-link .meta{ padding:12px 14px 13px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .card-link .title{ font-weight:800; letter-spacing:.2px; }
+    .card-link .tag{ font-size:.8rem; padding:.2rem .5rem; border-radius:999px; border:1px solid #e5e5e5; background:#fafafa; color:#333; flex:0 0 auto; }
+    @media (min-width: 860px){ .cards{ grid-template-columns: repeat(3, 1fr); } }
   </style>
 </head>
 <body>
@@ -54,7 +37,7 @@
 
   <!-- 右：本文 -->
   <main class="content">
-    <!-- 固定帯（後で整理予定ならこのまま）-->
+    <!-- 固定帯（後で整理予定のままでOK） -->
     <nav class="subnav" aria-label="Portal">
       <a href="/relic/" class="chip">Legacy Map</a>
       <a href="/sonic/" class="chip">Live Notes</a>
@@ -64,9 +47,9 @@
     <article class="page">
       <h1 style="margin:6px 0 12px">Welcome</h1>
 
-      <!-- 3枚のカード -->
+      <!-- 4枚のカード（同一クラス構造） -->
       <div class="cards">
-        <!-- Roses → Sonic へ -->
+        <!-- Roses → Sonic -->
         <a class="card-link" href="/sonic/">
           <img class="thumb" src="/images/roses-pink-rose.jpg" alt="Roses — vivid pink rose close-up" loading="lazy" width="1600" height="900">
           <div class="meta">
@@ -75,7 +58,7 @@
           </div>
         </a>
 
-        <!-- Hotel → Relic へ（建築/場所記事の入口にしても良い） -->
+        <!-- Hotel → Relic -->
         <a class="card-link" href="/relic/">
           <img class="thumb" src="/images/hotel-atami-kaihourou.jpg" alt="Hotel — glass interior with ocean view at dusk" loading="lazy" width="1600" height="900">
           <div class="meta">
@@ -84,26 +67,24 @@
           </div>
         </a>
 
-        <!-- Velox → Velox へ -->
+        <!-- Velox → Velox（縦トリミング版を採用するならファイル名を差し替え） -->
         <a class="card-link" href="/velox/">
-          <img class="thumb" src="/images/velox-legacy-b4-portrait.jpg" alt="Velox — black sedan..." loading="lazy">
+          <img class="thumb" src="/images/velox-legacy-b4-portrait.jpg" alt="Velox — black sedan at night by brick wall" loading="lazy" width="1200" height="1600">
           <div class="meta">
             <div class="title">Velox</div>
             <div class="tag">Velox</div>
           </div>
         </a>
-      </div>
 
-      <!-- 旧テキストサイトマップ（残したい場合） 
-      <div class="card" style="margin-top:14px">
-        <ul>
-          <li><a href="/sonic/">Sonic</a></li>
-          <li><a href="/relic/">Relic</a></li>
-          <li><a href="/velox/">Velox</a></li>
-          <li><a href="/gizmo/">Gizmo</a></li>
-        </ul>
+        <!-- Billboard → Sonic -->
+        <a class="card-link" href="/sonic/">
+          <img class="thumb" src="/images/sonic-billboard-stage.jpg" alt="Billboard — stage at Billboard Live Tokyo before performance" loading="lazy" width="1600" height="900">
+          <div class="meta">
+            <div class="title">Billboard</div>
+            <div class="tag">Sonic</div>
+          </div>
+        </a>
       </div>
-      -->
     </article>
   </main>
 </div>
