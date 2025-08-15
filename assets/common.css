@@ -49,19 +49,50 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-
   display:flex; flex-direction:column;
 }
 
-/* 固定帯（右上サブナビ） */
+/* 固定帯（右上サブナビ） ── スクロールさせず、足りなければ折り返す */
 .subnav{
-  position:sticky; top:0; z-index:20; display:flex; gap:.5rem; align-items:center;
-  padding:.6rem .8rem; background:rgba(255,255,255,.92); backdrop-filter:blur(6px) saturate(1.15);
-  border-bottom:1px solid var(--border); overflow-x:auto; -webkit-overflow-scrolling:touch;
-  box-shadow: inset 10px 0 8px -10px rgba(0,0,0,.12), inset -10px 0 8px -10px rgba(0,0,0,.12);
+  position: sticky; top: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; gap: .5rem; align-items: center;
+  padding: .6rem .8rem;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(6px) saturate(1.15);
+  border-bottom: 1px solid var(--border);
+  /* ← 横スクロールをやめる */
+  overflow-x: visible;          /* 以前の auto を撤廃 */
+  box-shadow:
+    inset 10px 0 8px -10px rgba(0,0,0,.12),
+    inset -10px 0 8px -10px rgba(0,0,0,.12);
 }
+
+/* チップ（ボタン） ── シンプル＆可読、状態で色は反転させない */
 .subnav .chip{
-  flex:0 0 auto; padding:.45rem .75rem; border-radius:999px; text-decoration:none; color:#333;
-  background:#fff; border:1px solid #ddd; font-weight:700; transition:.15s;
+  flex: 0 0 auto;
+  padding: .45rem .75rem;
+  border-radius: 999px;
+  text-decoration: none;
+  background: #fff;
+  color: #333;
+  border: 1px solid #ddd;
+  font-weight: 700;
+  transition: background .15s, border-color .15s, transform .15s;
 }
-.subnav .chip:hover{ background:#f6f6f6 }
-.subnav .chip.active{ background:var(--brand-weak); border-color:#bfe0f5; color:#0b4f80 }
+.subnav .chip:hover{
+  background: #f6f6f6;
+  transform: translateY(-1px);
+}
+/* 現在地（common.js が .active を付与） */
+.subnav .chip.active{
+  background: var(--brand-weak);
+  border-color: #bfe0f5;
+  color: #0b4f80;
+}
+
+/* フォーカスは“枠だけ”で統一（左帯と同理念） */
+.subnav .chip:focus,
+.subnav .chip:focus-visible{
+  outline: 2px solid #0b4f80;     /* 目立ちすぎるなら #7ec3ff でもOK */
+  outline-offset: 2px;
+}
 
 /* 本文 */
 .page{padding:16px}
