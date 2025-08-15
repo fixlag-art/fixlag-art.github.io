@@ -18,7 +18,8 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-
 /* 左帯リンク（既定：文字=淡色②=白） */
 .sidenav a{
   display:block; text-decoration:none; padding:.5rem .6rem; border-radius:.4rem;
-  border:1px solid transparent; font-weight:600; color:#fff; outline:none; background:transparent;
+  border:1px solid transparent; font-weight:600; color:#fff; outline:none;
+  background:var(--ink); /* デフォルト状態から帯色背景 */
 }
 .sidenav a:visited{ color:#fff }
 
@@ -37,14 +38,16 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-
 .sidenav a:focus,
 .sidenav a:focus-visible{
   background:var(--ink);
-  color:var(--ink) !important;     /* 濃色① */
-  outline:2px solid #fff;          /* 淡色② */
+  color:var(--ink);               /* 濃色① */
+  outline:2px solid #fff;         /* 淡色② */
   outline-offset:2px;
 }
+
+/* ★ アクティブかつフォーカス中も同様に */
 .sidenav a.active:focus,
 .sidenav a.active:focus-visible{
   background:var(--ink);
-  color:var(--ink) !important;
+  color:var(--ink);
   outline:2px solid #fff;
 }
 
