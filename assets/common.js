@@ -21,3 +21,7 @@
     if (active) a.classList.add('active');
   });
 })();
+
+// 初回表示：現在地(=active)に自動フォーカス
+const firstActive = document.querySelector('.sidenav a.active') || document.querySelector('.sidenav a');
+if (firstActive) firstActive.focus({ preventScroll: true });
