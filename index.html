@@ -18,15 +18,15 @@
     .card-link .meta{ padding:12px 14px 13px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .card-link .title{ font-weight:800; letter-spacing:.2px; }
     .card-link .tag{ font-size:.8rem; padding:.2rem .5rem; border-radius:999px; border:1px solid #e5e5e5; background:#fafafa; color:#333; flex:0 0 auto; }
-    @media (min-width: 860px){ .cards{ grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width:860px){ .cards{ grid-template-columns:repeat(3,1fr); } }
   </style>
 </head>
 <body>
 <div class="layout">
-  <!-- 左：共通サイドナビ -->
+  <!-- 左：共通サイドナビ（activeはJSが自動付与） -->
   <nav class="sidenav" aria-label="Global">
     <div class="logo">FIXLAG.ART</div>
-    <a href="/" class="active">Index</a>
+    <a href="/">Index</a>
     <a href="/sonic/">Sonic</a>
     <a href="/relic/">Relic</a>
     <a href="/velox/">Velox</a>
@@ -37,12 +37,15 @@
 
   <!-- 右：本文 -->
   <main class="content">
-    <!-- 固定帯（後で整理予定のままでOK） -->
-    <nav class="subnav" aria-label="Portal">
-      <a href="/relic/" class="chip">Legacy Map</a>
-      <a href="/sonic/" class="chip">Live Notes</a>
-      <a href="/gizmo/" class="chip">Devices</a>
-    </nav>
+    <!-- 固定帯（中身はJSONから生成） -->
+    <nav class="subnav" aria-label="Portal sections" data-base="/"></nav>
+    <script id="subnav-data" type="application/json">
+    [
+      ["Legacy Map", "/relic/"],
+      ["Live Notes", "/sonic/"],
+      ["Devices", "/gizmo/"]
+    ]
+    </script>
 
     <article class="page">
       <h1 style="margin:6px 0 12px">Welcome</h1>
@@ -67,7 +70,7 @@
           </div>
         </a>
 
-        <!-- Velox → Velox（縦トリミング版を採用するならファイル名を差し替え） -->
+        <!-- Velox → Velox（縦トリミング版を採用） -->
         <a class="card-link" href="/velox/">
           <img class="thumb" src="/images/velox-legacy-b4-portrait.jpg" alt="Velox — black sedan at night by brick wall" loading="lazy" width="1200" height="1600">
           <div class="meta">
@@ -88,6 +91,9 @@
     </article>
   </main>
 </div>
-<script src="/assets/common.js"></script>
+
+<!-- スクリプトはdeferで順序固定：subnav → common -->
+<script src="/assets/subnav.js" defer></script>
+<script src="/assets/common.js" defer></script>
 </body>
 </html>
