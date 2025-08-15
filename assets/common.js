@@ -1,8 +1,23 @@
-// ���ʥӡ����֥ʥӡ������ϥϥ��饤��
+// 左ナビ＆サブナビ：現在地ハイライト（/ を特別扱いして誤判定を防ぐ）
 (function(){
-  const here = location.pathname.replace(/\/+$/,'').toLowerCase();
+  const hereRaw = location.pathname;
+  // 末尾スラッシュを取り、空になったら "/" に戻す
+  const here = (hereRaw.replace(/\/+$/,'') || '/').toLowerCase();
+
   document.querySelectorAll('.sidenav a, .subnav a').forEach(a=>{
-    const p = new URL(a.getAttribute('href'), location.origin).pathname.replace(/\/+$/,'').toLowerCase();
-    if(here === p || (p !== '/' && here.startsWith(p+'/'))) a.classList.add('active');
+    const href = a.getAttribute('href');
+    const pRaw = new URL(href, location.origin).pathname;
+    const pNorm = pRaw.replace(/\/+$/,'');
+    const p = (pNorm || '/').toLowerCase();
+
+    let active = false;
+    if (p === '/') {
+      // ルートはルートのときだけ
+      active = (here === '/');
+    } else {
+      // それ以外は「完全一致」か「配下パス」のとき
+      active = (here === p) || here.startsWith(p + '/');
+    }
+    if (active) a.classList.add('active');
   });
 })();
