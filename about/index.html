@@ -1,14 +1,59 @@
-<!doctype html><html lang="en">
+<!doctype html>
+<html lang="ja">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>About | FIXLAG.ART</title>
-  <link rel="stylesheet" href="/assets/common.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FIXLAG.ART — Nexus</title>
+  <meta name="description" content="FIXLAG.ART Nexus — site gateway." />
+  <link rel="stylesheet" href="/assets/common.css" />
+
+  <style>
+    /* ====== Nexus top: 8-card gallery ====== */
+    .cards{
+      --gap:14px;
+      display:grid;
+      gap:var(--gap);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width:680px){ .cards{ grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width:1024px){ .cards{ grid-template-columns: repeat(4, 1fr); } }
+
+    .card-link{
+      display:block; background:#fff; border:1px solid var(--border);
+      border-radius:14px; overflow:hidden; text-decoration:none; color:inherit;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      animation: cardIn .5s both;
+    }
+    .card-link:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+      border-color:#dcdcdc;
+    }
+    @keyframes cardIn{
+      from{ opacity:0; transform:translateY(4px) }
+      to  { opacity:1; transform:none }
+    }
+
+    .card-link .thumb{
+      aspect-ratio:16/9; width:100%; object-fit:cover; display:block; background:#eee;
+    }
+    .card-link .meta{
+      padding:12px 14px 13px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card-link .title{ font-weight:800; letter-spacing:.2px }
+    .card-link .tag{
+      font-size:.8rem; padding:.2rem .5rem; border-radius:999px;
+      border:1px solid #e5e5e5; background:#fafafa; color:#333; flex:0 0 auto;
+    }
+  </style>
 </head>
 <body>
 <div class="layout">
+  <!-- 左：サイドナビ（About は横帯へ移動） -->
   <nav class="sidenav" aria-label="Global">
     <div class="logo">FIXLAG.ART</div>
-    <a href="/">Nexus</a>
+    <a href="/" class="active">Nexus</a>
     <a href="/sonic/">Sonic</a>
     <a href="/relic/">Relic</a>
     <a href="/velox/">Velox</a>
@@ -16,33 +61,75 @@
     <div class="sep"></div>
   </nav>
 
+  <!-- 右：本文 -->
   <main class="content">
-    <nav class="subnav" aria-label="Portal" data-base="/"></nav>
-    <script id="subnav-data" type="application/json">[["Top","/"],["About","/about/"]]</script>
-    
+    <!-- 横帯：Top / About -->
+    <nav class="subnav" aria-label="Nexus sections" data-base="/"></nav>
+    <script id="subnav-data" type="application/json">
+      [
+        ["Top", "/"],
+        ["About", "/about.html"]
+      ]
+    </script>
+    <script src="/assets/subnav.js" defer></script>
+    <script src="/assets/common.js" defer></script>
+
     <article class="page">
-      <h1 style="margin:6px 0 12px">About</h1>
-    
-      <div class="card" style="margin-bottom:12px">
-        <p class="lead" style="margin:.2rem 0 .6rem">
-          A personal portal curating <em>live notes</em>, studies on industrial heritage,
-          leisurely drives, and gadgets—written in a restrained, cordial tone.
-        </p>
-        <p style="margin:0">
-          本サイトは、日常メモ・産業遺構の研究メモ・ドライブ・ガジェットの記録を
-          上品で落ち着いたトーンでまとめる個人ポータルです。
-        </p>
-      </div>
-    
-      <div class="card">
-        <h3 style="margin:.2rem 0 .6rem">Contact</h3>
-        <p style="margin:0">
-          <a href="mailto:receipt_desk@fixlag.art">receipt_desk@fixlag.art</a>
-        </p>
-      </div>
+      <h1 style="margin:6px 0 12px">Welcome</h1>
+
+      <!-- 8枚カード -->
+      <div id="cards" class="cards" aria-label="Featured entries"></div>
+
+      <script>
+        // 8枚分の定義（画像は /images/ 配下の現状ファイル名そのまま）
+        const CARD_DATA = [
+          { title:"Roses",    tag:"Sonic", href:"/sonic/", img:"/images/roses-pink-rose.jpg",          w:1600, h:900, alt:"Vivid pink rose close-up" },
+          { title:"Hotel",    tag:"Relic", href:"/relic/", img:"/images/hotel-atami-kaihourou.jpg",    w:1600, h:900, alt:"Glass interior with ocean view at dusk" },
+          { title:"Purple",   tag:"Sonic", href:"/sonic/", img:"/images/roses-purple-rose.jpg",        w:1600, h:900, alt:"Deep purple rose" },
+          { title:"Stage",    tag:"Sonic", href:"/sonic/", img:"/images/sonic-billboard-stage.jpg",    w:1600, h:900, alt:"Billboard Live Tokyo stage before performance" },
+          { title:"Window",   tag:"Sonic", href:"/sonic/", img:"/images/sonic-billboard-window.jpg",   w:1600, h:900, alt:"Billboard Live Tokyo window with night skyline" },
+          { title:"Forest",   tag:"Sonic", href:"/sonic/", img:"/images/sonic-glass-forest.jpg",       w:1600, h:900, alt:"Glass & forest composition" },
+          { title:"Velox (P)",tag:"Velox", href:"/velox/", img:"/images/velox-legacy-b4-portrait.jpg", w:1200, h:1600,alt:"Black sedan portrait by brick wall" },
+          { title:"Velox",    tag:"Velox", href:"/velox/", img:"/images/velox-legacy-b4.jpg",          w:1600, h:900, alt:"Black sedan landscape by brick wall" }
+        ];
+
+        // ちょっとだけランダムに：毎回シャッフルして並べる（固定順を望む場合はこの関数を外してください）
+        function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a }
+        const list = shuffle([...CARD_DATA]);
+
+        // DOMへ描画（アクセシビリティのため alt/width/height も付与）
+        const $cards = document.getElementById('cards');
+        list.forEach((c, i) => {
+          const a = document.createElement('a');
+          a.className = 'card-link';
+          a.href = c.href;
+          a.style.animationDelay = (i * 0.05) + 's'; // 入場を少し階段状に
+
+          const img = document.createElement('img');
+          img.className = 'thumb';
+          img.src = c.img;
+          img.alt = c.alt;
+          img.loading = 'lazy';
+          img.width = c.w; img.height = c.h;
+
+          const meta = document.createElement('div');
+          meta.className = 'meta';
+
+          const title = document.createElement('div');
+          title.className = 'title';
+          title.textContent = c.title;
+
+          const tag = document.createElement('div');
+          tag.className = 'tag';
+          tag.textContent = c.tag;
+
+          meta.append(title, tag);
+          a.append(img, meta);
+          $cards.append(a);
+        });
+      </script>
     </article>
   </main>
 </div>
-<script defer src="/assets/subnav.js"></script>
-<script defer src="/assets/common.js"></script>
-</body></html>
+</body>
+</html>
