@@ -1,114 +1,68 @@
-/* =========================================================
- * FIXLAG.ART common.js  (single source of truth)
- * v1.0-clean
- * - Subnav generator (#subnav-data)
- * - Current location highlight (left & subnav)
- * - Footer render (explicit via #site-footer)
- * - GA4 loader (only when data-ga="on")
- * ======================================================= */
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About | FIXLAG.ART</title>
+  <meta name="description" content="About | FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets." />
+  <link rel="stylesheet" href="/assets/common.css" />
+</head>
+<body>
+  <div class="layout">
+    <!-- Left: global sidenav -->
+    <nav class="sidenav" aria-label="Global">
+      <div class="logo">FIXLAG.ART</div>
+      <a href="/">Nexus</a>
+      <a href="/sonic/">Sonic</a>
+      <a href="/relic/">Relic</a>
+      <a href="/velox/">Velox</a>
+      <a href="/gizmo/">Gizmo</a>
+      <div class="sep"></div>
+    </nav>
 
-(() => {
-  // ---------- utils ----------
-  const $  = (s, r=document) => r.querySelector(s);
-  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
-  const norm = p => { const x=(p||'').replace(/\/+$/,''); return x ? x.toLowerCase() : '/'; };
-  const GA_ID = 'G-5FRL9XB7JS';
+    <!-- Right: content -->
+    <main class="content">
+      <!-- Subnav (Top / About) -->
+      <nav class="subnav" aria-label="About sections"></nav>
+      <script id="subnav-data" type="application/json">
+        [
+          ["Top", "/"],
+          ["About", "/about/"]
+        ]
+      </script>
 
-  // ---------- subnav ----------
-  function renderSubnav(){
-    const host = $('.subnav');
-    const data = $('#subnav-data');
-    if (!host || !data) return;
-    let items = [];
-    try { items = JSON.parse(data.textContent||'[]'); } catch(e){ console.error('[subnav] JSON parse error', e); return; }
-    host.innerHTML = items.map(([label, href]) => `<a href="${href}">${label}</a>`).join('');
-  }
+      <article class="page">
+        <!-- Card #1: Title + lead (B-plan) -->
+        <div class="card" style="margin-bottom:12px;">
+          <h1 class="page-title">About</h1>
+          <p class="lead">
+            A personal portal curating live notes, studies on industrial heritage, leisurely drives,
+            and gadgets — written in a restrained, cordial tone.
+          </p>
+          <p>
+            本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、
+            控えめで丁寧な文体でまとめる個人ポータルです。
+          </p>
+        </div>
 
-  // ---------- highlight (left & subnav) ----------
-  function highlight(anchors){
-    const here = norm(location.pathname);
-    anchors.forEach(a=>{
-      const href = a.getAttribute('href')||'';
-      const p = norm(new URL(href, location.origin).pathname);
-      const active = (p === '/') ? (here === '/') : (here === p || here.startsWith(p + '/'));
-      a.classList.toggle('active', active);
-    });
-  }
+        <!-- Card #2: Contact -->
+        <div class="card">
+          <h3 style="margin:.2rem 0 .6rem;">Contact</h3>
+          <p style="margin:0;">
+            E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
+          </p>
+        </div>
 
-  // ---------- footer (explicit via #site-footer) ----------
-  function buildFooterHTML(flags){
-    const out = [];
-    if ((flags.notice||'on') !== 'off'){
-      out.push(`
-        <h3 style="margin:.2rem 0 .6rem">Notice</h3>
-        <ul class="site-notice" style="margin:0;padding-left:1.2em;line-height:1.5;">
-          <li>This site uses Google Analytics (GA4) for traffic measurement. Cookies may be used.<br>
-              本サイトは統計分析のため GA4 を利用します。Cookie を利用し、取得データは統計処理でサイト改善のみに用います。</li>
-          <li>Cookies may be used to remember preferences and analyse traffic.<br>
-              サイト設定の記憶やトラフィック解析のために Cookie を使用する場合があります。</li>
-          <li>Materials are presented for educational/cultural purposes.<br>
-              本サイト内の資料は教育・文化目的で公開しています。必要に応じてプライバシーに関する注意をご確認ください。</li>
-          <li>Unauthorised reproduction is discouraged. All marks belong to their respective owners.<br>
-              無断転載はご遠慮ください。各商標はそれぞれの権利者に帰属します。</li>
-        </ul>
-      `);
-    }
-    if ((flags.copyright||'on') !== 'off'){
-      out.push(`<p style="margin:.6rem 0;color:var(--muted)">© FIXLAG.ART</p>`);
-    }
-    return out.join('');
-  }
+        <!-- Footer placeholder (explicit ON/OFF per page) -->
+        <div id="site-footer"
+             data-notice="on"
+             data-copyright="off"
+             data-ga="on"></div>
+      </article>
+    </main>
+  </div>
 
-  function loadGA4Once(){
-    if (window.__gaLoaded || !GA_ID) return;
-    window.__gaLoaded = true;
-    const s = document.createElement('script');
-    s.async = true;
-    s.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
-    s.setAttribute('data-ga4','true');
-    document.head.appendChild(s);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    window.gtag = window.gtag || gtag;
-    gtag('js', new Date());
-    gtag('config', GA_ID, { transport_type:'beacon', anonymize_ip:true });
-  }
-
-  function renderFooterIfRequested(){
-    const host = $('#site-footer');            // ← ここを唯一の前提に統一
-    if (!host) return;                         // 明示がないページは何もしない
-    if (host.dataset.rendered === '1') return; // 二重描画はしない（静かに無視）
-
-    const flags = {
-      notice:    (host.dataset.notice    || 'on').toLowerCase(),
-      copyright: (host.dataset.copyright || 'on').toLowerCase(),
-      ga:        (host.dataset.ga        || 'on').toLowerCase(),
-    };
-
-    host.classList.add('card');
-    host.style.margin = '12px 0';
-    host.innerHTML = buildFooterHTML(flags);
-    host.dataset.rendered = '1';
-
-    if (flags.ga !== 'off') loadGA4Once();
-  }
-
-  // ---------- boot ----------
-  const run = () => {
-    renderSubnav();
-    highlight($$('.sidenav a'));
-    highlight($$('.subnav a'));
-    renderFooterIfRequested();
-
-    // 初回フォーカス（スクロールさせない）
-    const first = $('.sidenav a.active') || $('.sidenav a');
-    first?.focus?.({ preventScroll:true });
-
-    console.debug('[common.js v1.0-clean] loaded');
-  };
-
-  (document.readyState === 'loading')
-    ? document.addEventListener('DOMContentLoaded', run, { once:true })
-    : run();
-})();
+  <!-- Scripts (subnav + footer are handled inside common.js) -->
+  <script defer src="/assets/common.js"></script>
+</body>
+</html>
