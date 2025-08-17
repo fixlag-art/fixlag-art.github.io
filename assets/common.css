@@ -119,3 +119,5 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-
 .site-footer .links{display:flex; gap:12px; flex-wrap:wrap}
 .site-footer a{color:var(--fg); text-decoration:none; border-bottom:1px dotted #ccc}
 .site-footer a:hover{border-bottom-color:#999}
+.site-footer .legal-list{margin:.2rem 0; padding-left:1.1em}
+.site-footer .legal-list li{margin:.2rem 0; color:var(--muted)}
