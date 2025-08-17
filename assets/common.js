@@ -112,3 +112,50 @@
     ? document.addEventListener('DOMContentLoaded', run, { once:true })
     : run();
 })();
+/* === Favicons (global inject) =============================== */
+(function injectFavicons() {
+  const ICON_BASE = "/assets/fixlag_favicons";
+  const ICONS = [
+    // 旧来ブラウザのデフォルト候補（sizes未指定）
+    { rel: "icon", type: "image/png", sizes: "",       file: "favicon-32x32.png" },
+
+    // 各種サイズ
+    { rel: "icon", type: "image/png", sizes: "16x16",  file: "favicon-16x16.png" },
+    { rel: "icon", type: "image/png", sizes: "32x32",  file: "favicon-32x32.png" },
+    { rel: "icon", type: "image/png", sizes: "48x48",  file: "favicon-48x48.png" },
+    { rel: "icon", type: "image/png", sizes: "64x64",  file: "favicon-64x64.png" },
+    { rel: "icon", type: "image/png", sizes: "96x96",  file: "favicon-96x96.png" },
+    { rel: "icon", type: "image/png", sizes: "128x128", file: "favicon-128x128.png" },
+    { rel: "icon", type: "image/png", sizes: "180x180", file: "favicon-180x180.png" },
+    { rel: "icon", type: "image/png", sizes: "192x192", file: "favicon-192x192.png" },
+    { rel: "icon", type: "image/png", sizes: "256x256", file: "favicon-256x256.png" },
+    { rel: "icon", type: "image/png", sizes: "512x512", file: "favicon-512x512.png" },
+
+    // iOS「ホーム画面に追加」用
+    { rel: "apple-touch-icon", sizes: "180x180", file: "favicon-180x180.png" },
+  ];
+
+  function alreadyHas(hrefTail) {
+    const links = document.head.querySelectorAll('link[rel~="icon"], link[rel="apple-touch-icon"]');
+    return Array.from(links).some(l => (l.href || "").endsWith("/" + hrefTail));
+  }
+
+  function addLink({ rel, type, sizes, file }) {
+    const href = `${ICON_BASE}/${file}`;
+    if (alreadyHas(file)) return;
+    const link = document.createElement("link");
+    link.rel = rel;
+    if (type)  link.type  = type;
+    if (sizes) link.sizes = sizes;
+    link.href = href;
+    document.head.appendChild(link);
+  }
+
+  function run() { ICONS.forEach(addLink); }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", run, { once: true });
+  } else {
+    run();
+  }
+})();
