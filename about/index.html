@@ -2,18 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About | FIXLAG.ART</title>
-  <meta name="description" content="About FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
+  <meta name="description" content="About | FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
   <link rel="stylesheet" href="/assets/common.css">
-  <style>
-    /* 余白だけページ側で少し確保（自動フッターと干渉しないように） */
-    .content { padding-bottom: 96px; }
-  </style>
 </head>
 <body>
 <div class="layout">
-  <!-- 左：グローバルナビ（About は外す） -->
+  <!-- : 左・共通サイドナビ -->
   <nav class="sidenav" aria-label="Global">
     <div class="logo">FIXLAG.ART</div>
     <a href="/">Nexus</a>
@@ -24,39 +20,45 @@
     <div class="sep"></div>
   </nav>
 
-  <!-- 右：本文 -->
+  <!-- : 右・本文 -->
   <main class="content">
-    <!-- 横帯は [Top][About] のみ -->
-    <nav class="subnav" aria-label="Portal" data-base="/"></nav>
+    <!-- 横帯（Top / About のみ） -->
+    <nav class="subnav" aria-label="About sections" data-base="/about/"></nav>
     <script id="subnav-data" type="application/json">
       [
-        ["Top",   "/"],
+        ["Top", "/"],
         ["About", "/about/"]
       ]
     </script>
 
     <article class="page">
-      <h1 style="margin:6px 0 12px">About</h1>
+      <h1 style="margin:6px 0 12px;">About</h1>
 
-      <div class="card" style="margin-bottom:12px">
-        <p class="lead" style="margin:.2rem 0 .6rem">
-          A personal portal curating live notes, studies on industrial heritage,
-          leisurely drives, and gadgets—written in a restrained, cordial tone.
+      <div class="card" style="margin-bottom:12px;">
+        <p class="lead" style="margin:.2rem 0 .6rem;">
+          A personal portal curating live notes, studies on industrial heritage, leisurely drives, and
+          gadgets—written in a restrained, cordial tone.
         </p>
-        <p style="margin:.6rem 0 0">
+        <p style="margin:.6rem 0;">
           本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を
           控えめで丁寧な文体でまとめる個人ポータルです。
         </p>
       </div>
+
+      <div class="card">
+        <h3 style="margin:.2rem 0 .6rem;">Contact</h3>
+        <p style="margin:0;">
+          E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
+        </p>
+      </div>
+
+      <!-- フッターは /assets/common.js が自動で挿入します（data-footer="off" にすると非表示） -->
     </article>
-    <!-- フッターは common.js が自動で挿入します -->
   </main>
 </div>
 
 <!-- scripts -->
 <script defer src="/assets/subnav.js"></script>
-/* <script defer src="/assets/common.js"></script> */
-<script defer src="/assets/common.js?v=ga4fix1"></script>
-
+<script defer src="/assets/common.js"></script>
 </body>
 </html>
