@@ -33,7 +33,7 @@
   const DEFAULT_CFG = {
     // 法的文言表示
     show: {
-      ga4Disclosure: true,     // ← GA4の“表記”を出すか（文言）
+      ga4Disclosure:  true,     // ← GA4の“表記”を出すか（文言）
       cookieBasic:    true,     // ← Cookieの簡易説明
       amazon:         false,    // ← Amazon表記（アフィのあるページだけtrue）
       privacy:        true,     // ← 簡易ポリシー
