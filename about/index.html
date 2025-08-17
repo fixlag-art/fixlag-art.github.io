@@ -1,68 +1,40 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>About | FIXLAG.ART</title>
-  <meta name="description" content="About | FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets." />
-  <link rel="stylesheet" href="/assets/common.css" />
+  <link rel="stylesheet" href="/assets/common.css">
 </head>
 <body>
   <div class="layout">
-    <!-- Left: global sidenav -->
-    <nav class="sidenav" aria-label="Global">
-      <div class="logo">FIXLAG.ART</div>
-      <a href="/">Nexus</a>
-      <a href="/sonic/">Sonic</a>
-      <a href="/relic/">Relic</a>
-      <a href="/velox/">Velox</a>
-      <a href="/gizmo/">Gizmo</a>
-      <div class="sep"></div>
-    </nav>
-
-    <!-- Right: content -->
+    <div class="sidenav-host"></div>   <!-- ← design.js が中身を描画 -->
     <main class="content">
-      <!-- Subnav (Top / About) -->
-      <nav class="subnav" aria-label="About sections"></nav>
-      <script id="subnav-data" type="application/json">
-        [
-          ["Top", "/"],
-          ["About", "/about/"]
-        ]
-      </script>
 
-      <article class="page">
-        <!-- Card #1: Title + lead (B-plan) -->
-        <div class="card" style="margin-bottom:12px;">
-          <h1 class="page-title">About</h1>
-          <p class="lead">
-            A personal portal curating live notes, studies on industrial heritage, leisurely drives,
-            and gadgets — written in a restrained, cordial tone.
-          </p>
-          <p>
-            本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、
-            控えめで丁寧な文体でまとめる個人ポータルです。
-          </p>
-        </div>
+      <!-- ページ本文（必要なら） -->
+      <div class="card" style="margin-bottom:12px">
+        <h3 style="margin:.2rem 0 .6rem">Contact</h3>
+        <p style="margin:0">E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a></p>
+      </div>
 
-        <!-- Card #2: Contact -->
-        <div class="card">
-          <h3 style="margin:.2rem 0 .6rem;">Contact</h3>
-          <p style="margin:0;">
-            E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
-          </p>
-        </div>
-
-        <!-- Footer placeholder (explicit ON/OFF per page) -->
-        <div id="site-footer"
-             data-notice="on"
-             data-copyright="on"
-             data-ga="on"></div>
-      </article>
+      <!-- フッターは design.js が自動追加 -->
     </main>
   </div>
 
-  <!-- Scripts (subnav + footer are handled inside common.js) -->
-  <script defer src="/assets/common.js"></script>
+  <!-- ページ設定（タイトル/リード/横帯/フッターON/OFF） -->
+  <script id="page-data" type="application/json">
+  {
+    "title": "About",
+    "lead_en": "A personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets — written in a restrained, cordial tone.",
+    "lead_ja": "本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、控えめで丁寧な文体でまとめる個人ポータルです。",
+    "base": "/about/",
+    "subnav": [["Top","/"],["About","/about/"]],
+    "footer": { "notice": "on", "copyright": "on" }
+  }
+  </script>
+
+  <script defer src="/assets/subnav.js"></script>  <!-- 既存でOK（必要なら） -->
+  <script defer src="/assets/common.js"></script>  <!-- GA・favicon等 -->
+  <script defer src="/assets/design.js"></script>  <!-- ★ 新規：共通UI -->
 </body>
 </html>
