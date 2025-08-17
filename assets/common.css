@@ -13,13 +13,26 @@
 }
 
 /* 今後使わなくなる単独 h1 のリセット */
-.page > h1 {
+/* 追加：カード見出しモードのスイッチ用（body か .page に付ける） */
+.card-title-mode .page > h1 {
   margin: 0;
   padding: 0;
   font-size: inherit;
   font-weight: inherit;
 }
 
+/* カード内に見出しを置くときのスタイル（これは残してOK） */
+.card .page-title {
+  margin: .2rem 0 .8rem;
+  font-size: 1.6rem;
+  line-height: 1.25;
+}
+
+.card .lead {
+  margin: 0 0 .6rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
 :root{
   --bg:#fafafa; --fg:#333; --ink:#1f1f1f; --muted:#666; --border:#e7e7e7;
   --brand:#0b4f80; --brand-weak:#e9f3fb; --card:#fff;
