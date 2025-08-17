@@ -1,32 +1,71 @@
-/* ===== Unified footer & legal manager (English → Japanese) ===== */
-(function(){
-  // 0) 文言を一元管理（ここを書き換えれば全頁反映）
-  const LEGAL_TEXT = {
-    ga4Disclosure: {
-      en: 'This site uses Google Analytics (GA4) to collect anonymised usage statistics for improvement.',
-      ja: '本サイトは改善目的で Google Analytics（GA4）により匿名の利用統計を取得します。'
-    },
-    cookieBasic: {
-      en: 'Cookies may be used to remember preferences and analyse traffic.',
-      ja: 'サイト設定の記憶やトラフィック解析のためにCookieを使用する場合があります。'
-    },
-    amazon: {
-      en: 'As an Amazon Associate I earn from qualifying purchases.',
-      ja: '当サイトはAmazonアソシエイト・プログラムの参加者です。適格販売により収入を得る場合があります。'
-    },
-    privacy: {
-      en: 'Materials are presented for educational/cultural purposes. See privacy notes where applicable.',
-      ja: '本サイトの内容は教育・文化目的で掲載しています。必要に応じてプライバシーに関する注記をご確認ください。'
-    },
-    terms: {
-      en: 'Unauthorised reproduction is discouraged. All marks belong to their respective owners.',
-      ja: '無断転載はご遠慮ください。各商標はそれぞれの権利者に帰属します。'
-    },
-    contact: {
-      en: 'For enquiries: ',
-      ja: 'お問い合わせ: '
+// ===== Footer (Notice) – global =====
+(function () {
+  // body に data-footer="off" を付けたページだけフッター非表示
+  const wantFooter = (document.body.getAttribute('data-footer') !== 'off');
+
+  function injectFooter() {
+    try {
+      if (!wantFooter) {
+        console.debug('[footer] skipped by data-footer=off');
+        return;
+      }
+      // 既に生成済みなら二重挿入しない
+      if (document.querySelector('.site-footer')) {
+        console.debug('[footer] already exists');
+        return;
+      }
+
+      const host = document.querySelector('.content') || document.body;
+
+      const footer = document.createElement('footer');
+      footer.className = 'site-footer';
+      footer.style.cssText = [
+        'margin:20px 0',
+        'padding:12px',
+        'background:#f9f9f9',
+        'border-top:1px solid var(--border)', // ← ここを修正
+        'font-size:.9rem',
+        'line-height:1.6'
+      ].join(';');
+
+      footer.innerHTML = `
+        <div class="card" style="margin:0">
+          <ul style="margin:0;padding-left:1.2rem">
+            <li>
+              This site uses Google Analytics (GA4) for traffic measurement. Cookies may be used.<br>
+              本サイトは匿名計測のために GA4 を利用します。Cookie を利用し、取得データは統計処理でサイト改善のみに用います。
+            </li>
+            <li>
+              Cookies may be used to remember preferences and analyse traffic.<br>
+              サイト設定の記憶やトラフィック解析のために Cookie を使用する場合があります。
+            </li>
+            <li>
+              Materials are presented for educational/cultural purposes.<br>
+              本サイト内の資料は教育・文化目的で公開されています。必要に応じてプライバシーに関する注意をご確認ください。
+            </li>
+            <li>
+              Unauthorised reproduction is discouraged. All marks belong to their respective owners.<br>
+              無断転載はご遠慮ください。各商標はそれぞれの権利者に帰属します。
+            </li>
+          </ul>
+          <p style="margin:.8rem 0 0;color:#666">© FIXLAG.ART</p>
+        </div>
+      `;
+
+      host.appendChild(footer);
+      console.debug('[footer] injected into', host === document.body ? 'body' : '.content');
+    } catch (e) {
+      console.error('[footer] failed:', e);
     }
-  };
+  }
+
+  // DOM 準備後に確実に実行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectFooter, { once: true });
+  } else {
+    injectFooter();
+  }
+})();
 
   // 1) ページ側の設定（なければ既定ON/OFF）
   //   使い方：<script id="footer-config" type="application/json">{ ... }</script>
