@@ -1,42 +1,87 @@
-// 左ナビ＆サブナビ：現在地ハイライト（/ を特別扱いして誤判定を防ぐ）
+/* ===== Unified footer & legal manager (English → Japanese) ===== */
 (function(){
-  const hereRaw = location.pathname;
-  // 末尾スラッシュを取り、空になったら "/" に戻す
-  const here = (hereRaw.replace(/\/+$/,'') || '/').toLowerCase();
-
-  document.querySelectorAll('.sidenav a, .subnav a').forEach(a=>{
-    const href = a.getAttribute('href');
-    const pRaw = new URL(href, location.origin).pathname;
-    const pNorm = pRaw.replace(/\/+$/,'');
-    const p = (pNorm || '/').toLowerCase();
-
-    let active = false;
-    if (p === '/') {
-      // ルートはルートのときだけ
-      active = (here === '/');
-    } else {
-      // それ以外は「完全一致」か「配下パス」のとき
-      active = (here === p) || here.startsWith(p + '/');
+  // 0) 文言を一元管理（ここを書き換えれば全頁反映）
+  const LEGAL_TEXT = {
+    ga4Disclosure: {
+      en: 'This site uses Google Analytics (GA4) to collect anonymised usage statistics for improvement.',
+      ja: '本サイトは改善目的で Google Analytics（GA4）により匿名の利用統計を取得します。'
+    },
+    cookieBasic: {
+      en: 'Cookies may be used to remember preferences and analyse traffic.',
+      ja: 'サイト設定の記憶やトラフィック解析のためにCookieを使用する場合があります。'
+    },
+    amazon: {
+      en: 'As an Amazon Associate I earn from qualifying purchases.',
+      ja: '当サイトはAmazonアソシエイト・プログラムの参加者です。適格販売により収入を得る場合があります。'
+    },
+    privacy: {
+      en: 'Materials are presented for educational/cultural purposes. See privacy notes where applicable.',
+      ja: '本サイトの内容は教育・文化目的で掲載しています。必要に応じてプライバシーに関する注記をご確認ください。'
+    },
+    terms: {
+      en: 'Unauthorised reproduction is discouraged. All marks belong to their respective owners.',
+      ja: '無断転載はご遠慮ください。各商標はそれぞれの権利者に帰属します。'
+    },
+    contact: {
+      en: 'For enquiries: ',
+      ja: 'お問い合わせ: '
     }
-    if (active) a.classList.add('active');
-  });
-})();
+  };
 
-// 初回表示：現在地(=active)に自動フォーカス
-const firstActive = document.querySelector('.sidenav a.active') || document.querySelector('.sidenav a');
-if (firstActive) firstActive.focus({ preventScroll: true });
+  // 1) ページ側の設定（なければ既定ON/OFF）
+  //   使い方：<script id="footer-config" type="application/json">{ ... }</script>
+  const DEFAULT_CFG = {
+    // 法的文言表示
+    show: {
+      ga4Disclosure: true,     // ← GA4の“表記”を出すか（文言）
+      cookieBasic:    true,     // ← Cookieの簡易説明
+      amazon:         false,    // ← Amazon表記（アフィのあるページだけtrue）
+      privacy:        true,     // ← 簡易ポリシー
+      terms:          true,     // ← 注意/免責
+      contact:        true      // ← 連絡先ブロック
+    },
+    // 実タグの挙動
+    ga4: {
+      enable: true,                 // ← GA4タグを“実際に”挿入するか
+      measurementId: 'G-XXXXXXX'    // ← あなたのGA4測定ID
+    },
+    backToTop: true,
+    year: true,
+    // 連絡先メール（ここを直せば全ページ統一）
+    contactEmail: 'receit.desk@fixlag.org'
+  };
 
-/* ===== Unified footer renderer (English → Japanese, toggle by per-page config) ===== */
-(function(){
-  // ① ページ側の設定を読む（無ければ既定ON/OFF）
-  //   使い方：<script id="footer-config" type="application/json">{ "amazon": true, "contact": true }</script>
-  let cfg = { amazon:false, contact:true, policy:true, backToTop:true, year:true };
+  let cfg = structuredClone(DEFAULT_CFG);
   const node = document.getElementById('footer-config');
   if (node) {
-    try { Object.assign(cfg, JSON.parse(node.textContent||"{}")); } catch(e){}
+    try { 
+      const userCfg = JSON.parse(node.textContent || "{}");
+      // 深いマージ（最低限）
+      if (userCfg.show) Object.assign(cfg.show, userCfg.show);
+      if (userCfg.ga4)  Object.assign(cfg.ga4,  userCfg.ga4);
+      if (userCfg.hasOwnProperty('backToTop')) cfg.backToTop = !!userCfg.backToTop;
+      if (userCfg.hasOwnProperty('year'))      cfg.year      = !!userCfg.year;
+      if (userCfg.contactEmail) cfg.contactEmail = userCfg.contactEmail;
+    } catch(e){}
   }
 
-  // ② フッターの DOM を組み立て（順序は常に固定、表示だけON/OFF）
+  // 2) 必要なら GA4 “実タグ” を挿入（表記は下のフッターで制御）
+  if (cfg.ga4.enable && cfg.ga4.measurementId && !window.__ga4Injected) {
+    window.__ga4Injected = true;
+    // gtag loader
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(cfg.ga4.measurementId);
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = window.gtag || gtag;
+    gtag('js', new Date());
+    gtag('config', cfg.ga4.measurementId);
+  }
+
+  // 3) フッター組み立て（順序固定・英→日。表示は show で切替）
   const footer = document.createElement('footer');
   footer.className = 'site-footer';
   footer.innerHTML = `
@@ -59,28 +104,22 @@ if (firstActive) firstActive.focus({ preventScroll: true });
         </section>
 
         <section class="col col-side">
-          ${cfg.contact ? `
+          <div class="block">
+            <ul class="legal-list">
+              ${cfg.show.ga4Disclosure ? `<li>${LEGAL_TEXT.ga4Disclosure.en}<br>${LEGAL_TEXT.ga4Disclosure.ja}</li>` : ''}
+              ${cfg.show.cookieBasic   ? `<li>${LEGAL_TEXT.cookieBasic.en}<br>${LEGAL_TEXT.cookieBasic.ja}</li>` : ''}
+              ${cfg.show.amazon        ? `<li>${LEGAL_TEXT.amazon.en}<br>${LEGAL_TEXT.amazon.ja}</li>` : ''}
+              ${cfg.show.privacy       ? `<li>${LEGAL_TEXT.privacy.en}<br>${LEGAL_TEXT.privacy.ja}</li>` : ''}
+              ${cfg.show.terms         ? `<li>${LEGAL_TEXT.terms.en}<br>${LEGAL_TEXT.terms.ja}</li>` : ''}
+            </ul>
+          </div>
+
+          ${cfg.show.contact ? `
             <div class="block">
               <h4>Contact<br><small class="muted">お問い合わせ</small></h4>
               <p class="muted">
-                For enquiries: <a href="mailto:receit.desk@fixlag.org">receit.desk@fixlag.org</a><br>
-                お問い合わせは <a href="mailto:receit.desk@fixlag.org">receit.desk@fixlag.org</a> へ。
-              </p>
-            </div>` : ''}
-
-          ${cfg.policy ? `
-            <div class="block">
-              <h4>Policy<br><small class="muted">方針</small></h4>
-              <p class="muted">Materials are presented for educational/cultural purposes. Unauthorized reproduction is discouraged.<br>
-              本サイトの内容は教育・文化目的で掲載しています。無断転載はご遠慮ください。</p>
-            </div>` : ''}
-
-          ${cfg.amazon ? `
-            <div class="block fine">
-              <p>
-                As an Amazon Associate I earn from qualifying purchases.<br>
-                当サイトはAmazonアソシエイト・プログラムの参加者です。適格販売により収入を得る場合があります。<br>
-                <span class="muted">※本記載はアフィリエイトリンクを含む当該ページに適用されます。</span>
+                ${LEGAL_TEXT.contact.en}<a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a><br>
+                ${LEGAL_TEXT.contact.ja}<a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>
               </p>
             </div>` : ''}
 
@@ -98,9 +137,7 @@ if (firstActive) firstActive.focus({ preventScroll: true });
       </div>
     </div>
   `;
-  // 年号
   const y = footer.querySelector('#y'); if (y) y.textContent = new Date().getFullYear();
 
-  // ③ 本文末尾に追加
   (document.querySelector('.content') || document.body).appendChild(footer);
 })();
