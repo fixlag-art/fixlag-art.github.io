@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>About | FIXLAG.ART</title>
+  <meta name="description" content="About FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
   <link rel="stylesheet" href="/assets/common.css">
 </head>
 <body>
 <div class="layout">
-  <!-- 左：共通サイドナビ -->
+  <!-- Left: global sidenav (About を外す) -->
   <nav class="sidenav" aria-label="Global">
     <div class="logo">FIXLAG.ART</div>
     <a href="/">Nexus</a>
@@ -19,49 +20,61 @@
     <div class="sep"></div>
   </nav>
 
-  <!-- 右：本文 -->
+  <!-- Right: content -->
   <main class="content">
-    <nav class="subnav" aria-label="About sections" data-base="/about/"></nav>
+    <!-- Top bar: [Top][About] のみ -->
+    <nav class="subnav" aria-label="Portal" data-base="/"></nav>
     <script id="subnav-data" type="application/json">
     [
-      ["Profile", "#profile"],
-      ["Credits", "#credits"],
-      ["Policy", "#policy"],
-      ["Contact", "#contact"]
+      ["Top",   "/"],
+      ["About", "/about/"]
     ]
     </script>
-    <script src="/assets/subnav.js"></script>
-    <script src="/assets/common.js"></script>
 
     <article class="page">
-      <h1>About</h1>
+      <h1 style="margin:6px 0 12px">About</h1>
 
-      <section id="profile" class="card">
-        <h2>Profile<br><small>プロフィール</small></h2>
-        <p>FIXLAG.ART is a hub for projects exploring the intersection of digital archives, visual design, and cultural memory.<br>
-        FIXLAG.ART は、デジタルアーカイブ、ビジュアルデザイン、文化的記憶の交差点を探求するプロジェクトのハブです。</p>
-      </section>
+      <div class="card" style="margin-bottom:12px">
+        <p class="lead" style="margin:.2rem 0 .6rem">
+          A personal portal curating live notes, studies on industrial heritage,
+          leisurely drives, and gadgets—written in a restrained, cordial tone.
+        </p>
+        <p style="margin:.6rem 0 0">
+          本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を
+          控えめで丁寧な文体でまとめる個人ポータルです。
+        </p>
+      </div>
 
-      <section id="credits" class="card">
-        <h2>Credits<br><small>クレジット</small></h2>
-        <p>Photography and text contributions are acknowledged individually within each project page.<br>
-        写真とテキストの寄稿は、各プロジェクトページ内で個別に記載しています。</p>
-      </section>
-
-      <section id="policy" class="card">
-        <h2>Policy<br><small>ポリシー</small></h2>
-        <p>All materials are presented for educational and cultural purposes. Unauthorized reproduction is discouraged.<br>
-        すべての素材は教育的・文化的な目的で提示されています。無断転載はご遠慮ください。</p>
-      </section>
-
-      <section id="contact" class="card">
-        <h2>Contact<br><small>お問い合わせ</small></h2>
-        <p>For inquiries, please email <a href="mailto:receit.desk@fixlag.org">receit.desk@fixlag.org</a>.<br>
-        お問い合わせは <a href="mailto:receit.desk@fixlag.org">receit.desk@fixlag.org</a> までご連絡ください。</p>
-      </section>
-
+      <div class="card">
+        <h3 style="margin:.2rem 0 .6rem">Contact</h3>
+        <p style="margin:0">
+          E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
+        </p>
+      </div>
     </article>
+
+    <!-- 統一フッター（英→日）。common.js がフッターを挿入する設計でも、
+         .site-footer が既に存在する場合は二重挿入しない実装を推奨。 -->
+    <footer class="site-footer" style="margin:24px 16px">
+      <div class="card">
+        <p style="margin:.2rem 0 .4rem; font-size:.95rem">
+          This site uses Google Analytics (GA4) for traffic measurement. Cookies may be used.
+          We analyse data in aggregate to improve content quality.
+        </p>
+        <p style="margin:0; font-size:.95rem">
+          当サイトではアクセス解析のために Google アナリティクス（GA4）を利用します。
+          Cookie を用いる場合があり、取得データは統計的に処理してサイト改善のみに用います。
+        </p>
+        <p style="margin:.6rem 0 0; color:var(--muted); font-size:.9rem">
+          © FIXLAG.ART
+        </p>
+      </div>
+    </footer>
   </main>
 </div>
+
+<!-- scripts -->
+<script defer src="/assets/subnav.js"></script>
+<script defer src="/assets/common.js"></script>
 </body>
 </html>
