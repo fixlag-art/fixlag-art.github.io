@@ -48,7 +48,7 @@
     backToTop: true,
     year: true,
     // 連絡先メール（ここを直せば全ページ統一）
-    contactEmail: 'receit.desk@fixlag.org'
+    contactEmail: 'receipt.desk@fixlag.org'
   };
 
   let cfg = structuredClone(DEFAULT_CFG);
@@ -99,7 +99,6 @@
             <a href="/relic/">Relic</a>
             <a href="/velox/">Velox</a>
             <a href="/gizmo/">Gizmo</a>
-            <a href="/about/">About</a>
           </div>
         </section>
 
