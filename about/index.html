@@ -6,10 +6,14 @@
   <title>About | FIXLAG.ART</title>
   <meta name="description" content="About FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
   <link rel="stylesheet" href="/assets/common.css">
+  <style>
+    /* 余白だけページ側で少し確保（自動フッターと干渉しないように） */
+    .content { padding-bottom: 96px; }
+  </style>
 </head>
 <body>
 <div class="layout">
-  <!-- Left: global sidenav (About を外す) -->
+  <!-- 左：グローバルナビ（About は外す） -->
   <nav class="sidenav" aria-label="Global">
     <div class="logo">FIXLAG.ART</div>
     <a href="/">Nexus</a>
@@ -20,15 +24,15 @@
     <div class="sep"></div>
   </nav>
 
-  <!-- Right: content -->
+  <!-- 右：本文 -->
   <main class="content">
-    <!-- Top bar: [Top][About] のみ -->
+    <!-- 横帯は [Top][About] のみ -->
     <nav class="subnav" aria-label="Portal" data-base="/"></nav>
     <script id="subnav-data" type="application/json">
-    [
-      ["Top",   "/"],
-      ["About", "/about/"]
-    ]
+      [
+        ["Top",   "/"],
+        ["About", "/about/"]
+      ]
     </script>
 
     <article class="page">
@@ -52,24 +56,7 @@
         </p>
       </div>
     </article>
-
-    <!-- 統一フッター（英→日）。common.js がフッターを挿入する設計でも、
-         .site-footer が既に存在する場合は二重挿入しない実装を推奨。 -->
-    <footer class="site-footer" style="margin:24px 16px">
-      <div class="card">
-        <p style="margin:.2rem 0 .4rem; font-size:.95rem">
-          This site uses Google Analytics (GA4) for traffic measurement. Cookies may be used.
-          We analyse data in aggregate to improve content quality.
-        </p>
-        <p style="margin:0; font-size:.95rem">
-          当サイトではアクセス解析のために Google アナリティクス（GA4）を利用します。
-          Cookie を用いる場合があり、取得データは統計的に処理してサイト改善のみに用います。
-        </p>
-        <p style="margin:.6rem 0 0; color:var(--muted); font-size:.9rem">
-          © FIXLAG.ART
-        </p>
-      </div>
-    </footer>
+    <!-- フッターは common.js が自動で挿入します -->
   </main>
 </div>
 
