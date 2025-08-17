@@ -141,3 +141,32 @@
 
   (document.querySelector('.content') || document.body).appendChild(footer);
 })();
+
+/* === Google Analytics 4 (global) ===
+ * Property: fixlag.art
+ * Stream  : fixlag.art * Cloudflare
+ * MEASUREMENT_ID: G-F5RL9XBTJS
+ */
+(function GA4() {
+  if (window.__ga4Loaded) return;       // 二重読み込み防止
+  window.__ga4Loaded = true;
+
+  // gtag.js を非同期で読み込み
+  var s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=G-F5RL9XBTJS';
+  document.head.appendChild(s);
+
+  // 初期化＆設定
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('js', new Date());
+  gtag('config', 'G-F5RL9XBTJS', {
+    transport_type: 'beacon',      // なるべく確実に送る
+    anonymize_ip: true             // 追加: IP 匿名化（任意だが推奨）
+    // page_path は Workers リダイレクトでも自動で拾われます
+  });
+})();
+
