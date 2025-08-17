@@ -1,19 +1,37 @@
-// ===== Footer (Notice) – global =====
-(function () {
-  // body に data-footer="off" を付けたページだけフッター非表示
-  const wantFooter = (document.body.getAttribute('data-footer') !== 'off');
 
+// ==== Footer (notice) - global with attempt counter & optional prompt ====
+(function () {
+  // 1) 試行回数カウント（ページ内での実行回数）
+  window.__footerAttemptCount = (window.__footerAttemptCount || 0) + 1;
+  const attempt = window.__footerAttemptCount;
+
+  // 2) すでに注入済みなら、以降はスキップ（決定打）
+  if (window.__siteFooterInjected) {
+    console.warn(`[footer] skipped: already injected (attempt #${attempt})`);
+    maybePrompt(attempt, 'already-injected');
+    return;
+  }
+
+  // 3) 注入プロセス開始
   function injectFooter() {
     try {
+      // data-footer="off" なら描画しない
+      const wantFooter = (document.body.getAttribute('data-footer') !== 'off');
       if (!wantFooter) {
-        console.debug('[footer] skipped by data-footer=off');
+        console.info('[footer] skipped by data-footer="off"');
+        maybePrompt(attempt, 'disabled');
         return;
       }
-      // 既に生成済みなら二重挿入しない
+
+      // 念のため DOM に既にあるなら中止（保険）
       if (document.querySelector('.site-footer')) {
-        console.debug('[footer] already exists');
+        console.warn(`[footer] DOM already has .site-footer (attempt #${attempt})`);
+        maybePrompt(attempt, 'dom-exists');
         return;
       }
+
+      // ここで “注入済み” フラグを立てる（同時多重を防ぐ）
+      window.__siteFooterInjected = true;
 
       const host = document.querySelector('.content') || document.body;
 
@@ -21,49 +39,57 @@
       footer.className = 'site-footer';
       footer.style.cssText = [
         'margin:20px 0',
-        'padding:12px',
+        'padding:14px',
         'background:#f9f9f9',
-        'border-top:1px solid var(--border)', // ← ここを修正
+        'border-top:1px solid #ddd',
         'font-size:.9rem',
         'line-height:1.6'
       ].join(';');
 
       footer.innerHTML = `
         <div class="card" style="margin:0">
-          <ul style="margin:0;padding-left:1.2rem">
-            <li>
-              This site uses Google Analytics (GA4) for traffic measurement. Cookies may be used.<br>
-              本サイトは匿名計測のために GA4 を利用します。Cookie を利用し、取得データは統計処理でサイト改善のみに用います。
-            </li>
-            <li>
-              Cookies may be used to remember preferences and analyse traffic.<br>
-              サイト設定の記憶やトラフィック解析のために Cookie を使用する場合があります。
-            </li>
-            <li>
-              Materials are presented for educational/cultural purposes.<br>
-              本サイト内の資料は教育・文化目的で公開されています。必要に応じてプライバシーに関する注意をご確認ください。
-            </li>
-            <li>
-              Unauthorised reproduction is discouraged. All marks belong to their respective owners.<br>
-              無断転載はご遠慮ください。各商標はそれぞれの権利者に帰属します。
-            </li>
+          <h3 style="margin:0;padding-left:.2rem">Notice</h3>
+          <ul style="margin:.2rem 0 .6rem">
+            <li>This site uses Google Analytics (GA4) for traffic measurement. Cookies may be used.<br>
+                本サイトは主に計測のため GA4 を利用します。Cookie を利用し、取得データは集計処理でサイト改善のみに用います。</li>
+            <li>Cookies may be used to remember preferences and analyse traffic.<br>
+                サイト設定の記憶やトラフィック解析のために Cookie を使用する場合があります。</li>
+            <li>Materials are presented for educational/cultural purposes.<br>
+                本サイト内の資料は 教育・文化目的で公開されています。必要に応じてプライバシーに関する注意をご確認ください。</li>
+            <li>Unauthorised reproduction is discouraged. All marks belong to their respective owners.<br>
+                無断転載はご遠慮ください。各商標はそれぞれの権利者に帰属します。</li>
           </ul>
-          <p style="margin:.8rem 0 0;color:#666">© FIXLAG.ART</p>
+          <p style="margin:.6rem 0; color:var(--muted)">© FIXLAG.ART</p>
         </div>
       `;
 
-      host.appendChild(footer);
-      console.debug('[footer] injected into', host === document.body ? 'body' : '.content');
+      (host || document.body).appendChild(footer);
+      console.log(`[footer] injected (attempt #${attempt})`);
+      maybePrompt(attempt, 'injected');
     } catch (e) {
       console.error('[footer] failed:', e);
+      maybePrompt(attempt, 'error');
     }
   }
 
-  // DOM 準備後に確実に実行
+  // 4) DOM 準備後に 1 回だけ実行
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectFooter, { once: true });
   } else {
     injectFooter();
+  }
+
+  // ---- ユーザーに見せない“運用者向け”プロンプト ----
+  //  ?debugFooter=1 または localStorage.debugFooter="1" のときのみ alert を出す
+  function maybePrompt(count, phase) {
+    const params = new URLSearchParams(location.search);
+    const debugOn = params.get('debugFooter') === '1' || localStorage.getItem('debugFooter') === '1';
+    if (!debugOn) return;
+
+    // 2回目以降、またはエラー系で通知（本番ユーザーには出ない）
+    if (count > 1 || phase === 'error') {
+      alert(`[footer] attempt #${count} (${phase}) on ${location.pathname}`);
+    }
   }
 })();
 
