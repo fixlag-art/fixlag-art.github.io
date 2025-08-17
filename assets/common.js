@@ -81,65 +81,37 @@
     gtag('config', cfg.ga4.measurementId);
   }
 
-  // 3) フッター組み立て（順序固定・英→日。表示は show で切替）
-  const footer = document.createElement('footer');
-  footer.className = 'site-footer';
-  footer.innerHTML = `
-    <div class="wrap">
-      <div class="row">
-        <section class="col col-main">
-          <h4>About this site<br><small class="muted">このサイトについて</small></h4>
-          <p class="muted">
-            A personal portal curating live notes, studies on industrial heritage, drives and gadgets.<br>
-            日常メモ・産業遺構・ドライブ・ガジェットを穏やかな調子でまとめています。
-          </p>
-          <div class="links">
-            <a href="/">Nexus</a>
-            <a href="/sonic/">Sonic</a>
-            <a href="/relic/">Relic</a>
-            <a href="/velox/">Velox</a>
-            <a href="/gizmo/">Gizmo</a>
-          </div>
-        </section>
+// --- フッター生成 ---
+const footer = document.createElement('footer');
+footer.className = 'site-footer';
+footer.style.cssText = 'margin:24px 0 0;padding:16px;background:#f9f9f9;border-top:1px solid #ddd;font-size:.85rem;line-height:1.6';
 
-        <section class="col col-side">
-          <div class="block">
-            <ul class="legal-list">
-              ${cfg.show.ga4Disclosure ? `<li>${LEGAL_TEXT.ga4Disclosure.en}<br>${LEGAL_TEXT.ga4Disclosure.ja}</li>` : ''}
-              ${cfg.show.cookieBasic   ? `<li>${LEGAL_TEXT.cookieBasic.en}<br>${LEGAL_TEXT.cookieBasic.ja}</li>` : ''}
-              ${cfg.show.amazon        ? `<li>${LEGAL_TEXT.amazon.en}<br>${LEGAL_TEXT.amazon.ja}</li>` : ''}
-              ${cfg.show.privacy       ? `<li>${LEGAL_TEXT.privacy.en}<br>${LEGAL_TEXT.privacy.ja}</li>` : ''}
-              ${cfg.show.terms         ? `<li>${LEGAL_TEXT.terms.en}<br>${LEGAL_TEXT.terms.ja}</li>` : ''}
-            </ul>
-          </div>
+footer.innerHTML = `
+  <div class="card" style="margin:0">
+    <ul style="margin:0;padding-left:1.2rem">
+      <li>
+        This site uses Google Analytics (GA4) for traffic measurement. Cookies may be used.<br>
+        本サイトは匿名計測のために GA4 を利用します。Cookie を利用し、取得データは統計処理でサイト改善のみに用います。
+      </li>
+      <li>
+        Cookies may be used to remember preferences and analyse traffic.<br>
+        サイト設定の記憶やトラフィック解析のために Cookie を使用する場合があります。
+      </li>
+      <li>
+        Materials are presented for educational/cultural purposes.<br>
+        本サイト内の資料は教育・文化目的で公開されています。必要に応じてプライバシーに関する注意をご確認ください。
+      </li>
+      <li>
+        Unauthorised reproduction is discouraged. All marks belong to their respective owners.<br>
+        無断転載はご遠慮ください。各商標はそれぞれの権利者に帰属します。
+      </li>
+    </ul>
+    <p style="margin:.8rem 0 0;color:#666">© FIXLAG.ART</p>
+  </div>
+`;
 
-          ${cfg.show.contact ? `
-            <div class="block">
-              <h4>Contact<br><small class="muted">お問い合わせ</small></h4>
-              <p class="muted">
-                ${LEGAL_TEXT.contact.en}<a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a><br>
-                ${LEGAL_TEXT.contact.ja}<a href="mailto:${cfg.contactEmail}">${cfg.contactEmail}</a>
-              </p>
-            </div>` : ''}
-
-          ${cfg.backToTop ? `
-            <div class="block">
-              <a href="#" class="muted" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
-                Back to top / ページ上部へ
-              </a>
-            </div>` : ''}
-        </section>
-      </div>
-
-      <div class="fine" style="margin-top:10px">
-        ${cfg.year ? `© <span id="y"></span> FIXLAG.ART` : 'FIXLAG.ART'}
-      </div>
-    </div>
-  `;
-  const y = footer.querySelector('#y'); if (y) y.textContent = new Date().getFullYear();
-
-  (document.querySelector('.content') || document.body).appendChild(footer);
-})();
+// bodyの末尾に追加
+(document.querySelector('.content') || document.body).appendChild(footer);
 
 /* === Google Analytics 4 (global) ===
  * Property: fixlag.art
