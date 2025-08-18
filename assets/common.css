@@ -225,3 +225,36 @@ h2{font-size:20px;margin:18px 0 10px}
 @media (min-width: 961px){
   .nav-toggle, .scrim{ display: none !important; }
 }
+
+/* ---- Drawer layering fix ---- */
+:root{
+  --z-sidenav: 1100;   /* サイドナビ本体（最前面） */
+  --z-scrim:   1090;   /* 画面を覆うスクリーン（その後ろ） */
+}
+
+/* サイドナビ（既存の .sidenav に追加） */
+.sidenav{
+  z-index: var(--z-sidenav);
+}
+
+/* オーバーレイ（スクリーン）。クラス名は現在のものに合わせてください */
+.sidenav-overlay,
+.sidenav__scrim,
+.nav-scrim{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  z-index: var(--z-scrim);
+  display: none;             /* デフォルト非表示 */
+  pointer-events: auto;      /* クリックで閉じられる */
+}
+
+/* 開いたときだけ表示（開閉時に body に .nav-open を付けている想定） */
+body.nav-open .sidenav-overlay,
+body.nav-open .sidenav__scrim,
+body.nav-open .nav-scrim{
+  display: block;
+}
+
+/* 念のため本文を一段下げて、重なり順の競合を防止 */
+.content{ position: relative; z-index: 1; }
