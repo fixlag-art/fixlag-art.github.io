@@ -1,13 +1,9 @@
 /* =========================================================
  * FIXLAG.ART  /assets/common.css  (B-plan unified)
- * - 2カラム骨格 / 左帯（素直ルール）
- * - サブナビ（a要素のチップ風）
- * - ページタイトルはカード内に統一（.page-title / .lead）
- * - フッターの法的文言用: .site-notice（中身は common.js が挿入）
  * ======================================================= */
 
 /* ----- Theme tokens ----- */
-:root{
+:root {
   --bg:#fafafa;
   --fg:#333;
   --ink:#1f1f1f;
@@ -16,7 +12,6 @@
   --brand:#0b4f80;
   --brand-weak:#e9f3fb;
   --card:#fff;
-  --bg-soft:#f5f5f7;
 }
 
 /* Base */
@@ -32,36 +27,32 @@ body{
 /* ===== 2カラム骨格 ===== */
 .layout{ display:flex; min-height:100vh }
 
-/* 左：サイドナビ（素直ルール） */
-.layout .sidenav{
+/* 左：サイドナビ */
+.sidenav{
   position:sticky; top:0; height:100vh; overflow-y:auto;
   background:var(--ink); color:#fff;
   min-width:160px; padding:12px; border-right:1px solid #0005;
 }
 .sidenav .logo{ font-size:1.2rem; font-weight:800; margin:.2rem .2rem .6rem }
 .sidenav .sep{ border-top:1px solid #ffffff22; margin:.5rem 0 }
-
-/* 左帯リンク：常に「帯=濃色① / 文字=白」→ フォーカスで白枠のみ */
 .sidenav a{
   display:block; text-decoration:none;
   padding:.5rem .6rem; border-radius:.4rem;
   border:1px solid transparent; font-weight:600;
   background:var(--ink); color:#fff; outline:none;
 }
-.sidenav a:visited{ color:#fff }
 .sidenav a:hover{ background:#2a2a2a }
 .sidenav a.active{ background:var(--ink); color:#fff }
-.sidenav a:focus,
-.sidenav a:focus-visible{ outline:2px solid #fff; outline-offset:2px }
-.sidenav a:active{ filter:brightness(1.05) }
+.sidenav a:focus{ outline:2px solid #fff; outline-offset:2px }
 
 /* 右：本文カラム */
-.layout .content{
-  flex:1; height:100vh; overflow-y:auto; background:var(--bg);
+.content{
+  flex:1; height:100vh; overflow-y:auto;
   display:flex; flex-direction:column;
+  background:var(--bg);
 }
 
-/* ===== サブナビ（横帯） ===== */
+/* ===== 横帯サブナビ ===== */
 .subnav{
   position:sticky; top:0; z-index:20;
   display:flex; gap:.5rem; align-items:center;
@@ -70,37 +61,34 @@ body{
   backdrop-filter:blur(6px) saturate(1.15);
   border-bottom:1px solid var(--border);
   overflow-x:auto; -webkit-overflow-scrolling:touch;
-  box-shadow: inset 10px 0 8px -10px rgba(0,0,0,.12),
-              inset -10px 0 8px -10px rgba(0,0,0,.12);
 }
 .subnav a{
   flex:0 0 auto;
   padding:.45rem .75rem; border-radius:999px;
-  text-decoration:none; color:#333;
-  background:#fff; border:1px solid #ddd; font-weight:700;
-  transition:.15s;
+  text-decoration:none; font-weight:700;
+  color:#333; background:#fff; border:1px solid #ddd;
 }
 .subnav a:hover{ background:#f6f6f6 }
-.subnav a.active{ background:var(--brand-weak); border-color:#bfe0f5; color:var(--brand) }
+.subnav a.active{
+  background:var(--brand-weak);
+  border-color:#bfe0f5;
+  color:var(--brand);
+}
 
 /* ===== 本文 ===== */
 .page{ padding:16px }
 
-/* カード（共通） */
+/* カード */
 .card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:.8rem;
   padding:12px 14px;
-  box-shadow:0 1px 0 rgba(0,0,0,.04);
   margin:0 0 12px;
+  box-shadow:0 1px 0 rgba(0,0,0,.04);
 }
 
-/* B案：見出しはカード内に統一 */
-.page > h1{           /* 直下h1は使わない想定：リセット */
-  margin:0; padding:0;
-  font-size:inherit; font-weight:inherit;
-}
+/* B案：タイトルをカード内に */
 .card .page-title{
   margin:.2rem 0 .8rem;
   font-size:1.6rem; line-height:1.25;
@@ -110,17 +98,16 @@ body{
   font-weight:500; line-height:1.5;
 }
 
-/* フッターの法的文言のUL（common.jsが生成） */
+/* フッター文言（common.jsが生成） */
 .site-notice{
   margin:0; padding-left:1.2em; line-height:1.5;
+  font-size:.9rem; color:var(--muted);
 }
 
-/* モバイル（縦積み） */
+/* ===== モバイル ===== */
 @media (max-width:860px){
   .layout{ display:block }
-  .sidenav{ height:auto; position:relative }
-  .layout .sidenav{
-    display:flex; gap:.5rem; padding:10px; min-width:auto; overflow-x:auto;
-  }
-  .layout .content{ height:auto }
+  .sidenav{ height:auto; position:relative; min-width:auto; }
+  .sidenav{ display:flex; gap:.5rem; padding:10px; overflow-x:auto }
+  .content{ height:auto }
 }
