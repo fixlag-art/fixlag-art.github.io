@@ -1,69 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About | FIXLAG.ART</title>
+  <meta name="description" content="About FIXLAG.ART — Site mission, contact, and legal notes.">
   <link rel="stylesheet" href="/assets/common.css" />
-  <script defer src="/assets/common.js"></script>
+  <link rel="icon" href="/assets/fixlag_favicons/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" href="/assets/fixlag_favicons/favicon-192x192.png" sizes="192x192" />
 </head>
 <body>
 
-<!-- 横帯 -->
-<nav class="subnav" data-base="/about/">
-  <button class="hamburger" onclick="toggleSidenav()">☰</button>
-  <a href="/" class="pill">Top</a>
-  <a href="/about/" class="pill active">About</a>
-</nav>
-
-<!-- 全体レイアウト -->
 <div class="layout">
 
-  <!-- 左・縦帯 -->
-  <nav class="sidenav" aria-label="Global">
+  <!-- 横帯 -->
+  <nav class="subnav" aria-label="Section Navigation">
+    <button class="hamburger" onclick="toggleSidenav()">☰</button>
+    <div class="pill-wrap">
+      <a href="/" class="pill">Top</a>
+      <a href="/about/" class="pill active">About</a>
+    </div>
+  </nav>
+
+  <!-- 縦帯 -->
+  <nav class="sidenav" id="sidenav" aria-label="Category Navigation">
     <div class="logo">FIXLAG.ART</div>
-    <a href="/">Nexus</a>
-    <a href="/sonic/">Sonic</a>
-    <a href="/relic/">Relic</a>
-    <a href="/velox/">Velox</a>
-    <a href="/gizmo/">Gizmo</a>
+    <a href="/" class="pill">Nexus</a>
+    <a href="/sonic/" class="pill">Sonic</a>
+    <a href="/relic/" class="pill">Relic</a>
+    <a href="/velox/" class="pill">Velox</a>
+    <a href="/gizmo/" class="pill">Gizmo</a>
     <div class="sep"></div>
   </nav>
 
   <!-- 本文 -->
   <main class="content">
     <article class="page">
-      <h1>About</h1>
+      <h1 class="title">About</h1>
 
-      <div class="card">
-        <p class="lead">
-          A personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets—written in a restrained, cordial tone.
-        </p>
-        <p>
-          本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、控えめで丁寧な文体でまとめる個人ポータルです。
-        </p>
-      </div>
+      <p class="lead">
+        A personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets—written in a restrained, cordial tone.
+      </p>
+      <p>
+        本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を控えめで丁寧な文体でまとめる個人ポータルです。
+      </p>
 
-      <div class="card">
+      <section class="card" style="margin-top: 1rem;">
         <h3>Contact</h3>
         <p>Email: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a></p>
-      </div>
+      </section>
 
-      <div class="card notice">
+      <section class="card notice-block" style="margin-top: 1rem; background-color: #f9f9fa; border: 1px solid #ccc;">
         <h3>Notice</h3>
-        <ul>
-          <li>Some pages include affiliate links to Amazon.</li>
-          <li>当サイトはAmazonアソシエイト・プログラムの参加者です。</li>
-          <li>適格販売により収入を得る場合があります。</li>
+        <ul style="margin: 0; padding-left: 1.2rem;">
+          <li>This site participates in the Amazon Associates program. Earnings may be generated from qualifying purchases.</li>
+          <li>当サイトはAmazonアソシエイト・プログラムの参加者です。適格販売により収入を得る場合があります。</li>
+          <li>Google Analytics is enabled on most pages for basic traffic analysis.</li>
+          <li>Google Analytics によるアクセス解析を一部のページで行っています。</li>
         </ul>
-        <p style="margin-top:.5rem; font-size:.9em; color:var(--muted)">
-          © 2025 FIXLAG.ART. All rights reserved.
-        </p>
-      </div>
+      </section>
+
     </article>
   </main>
-
 </div>
 
+<script src="/assets/common.js" defer></script>
 </body>
 </html>
