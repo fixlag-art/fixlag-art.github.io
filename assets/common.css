@@ -1,113 +1,166 @@
-/* =========================================================
- * FIXLAG.ART  /assets/common.css  (B-plan unified)
- * ======================================================= */
+/* =========================
+   FIXLAG.ART — common.css
+   ========================= */
 
-/* ----- Theme tokens ----- */
-:root {
-  --bg:#fafafa;
-  --fg:#333;
-  --ink:#1f1f1f;
-  --muted:#666;
-  --border:#e7e7e7;
-  --brand:#0b4f80;
-  --brand-weak:#e9f3fb;
-  --card:#fff;
+/* --- CSS Variables --- */
+:root{
+  --bg:#0f1113;
+  --panel:#f4f5f6;
+  --panel-weak:#eef0f2;
+  --text:#e8eaed;
+  --muted:#a8b0b7;
+  --link:#78b3e8;
+  --border:#2d3238;
+  --accent:#4ea3c7;
+  --accent-ink:#0a2a34;
+
+  --radius:12px;
+  --pill:999px;
+
+  --nav-w:96px;
+  --maxw:980px;
+
+  --gap:16px;
+  --pad:14px;
+  --shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 8px 24px rgba(0,0,0,.25);
 }
 
-/* Base */
-*{ box-sizing:border-box }
-html,body{ height:100% }
+/* --- Base --- */
+*{box-sizing:border-box}
+html,body{height:100%}
+html{scroll-behavior:smooth}
 body{
   margin:0;
   background:var(--bg);
-  color:var(--fg);
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  color:var(--text);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Meiryo",sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
+img{max-width:100%;height:auto;display:block}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
 
-/* ===== 2カラム骨格 ===== */
-.layout{ display:flex; min-height:100vh }
-
-/* 左：サイドナビ */
+/* --- Layout --- */
+.layout{
+  display:grid;
+  grid-template-columns: var(--nav-w) 1fr;
+  min-height:100%;
+}
 .sidenav{
-  position:sticky; top:0; height:100vh; overflow-y:auto;
-  background:var(--ink); color:#fff;
-  min-width:160px; padding:12px; border-right:1px solid #0005;
+  position:sticky; top:0;
+  height:100vh;
+  padding:18px 12px;
+  border-right:1px solid var(--border);
+  background:linear-gradient(180deg,#121518 0%,#0f1113 100%);
 }
-.sidenav .logo{ font-size:1.2rem; font-weight:800; margin:.2rem .2rem .6rem }
-.sidenav .sep{ border-top:1px solid #ffffff22; margin:.5rem 0 }
+.sidenav .logo{
+  color:#fff; font-weight:800; letter-spacing:.5px;
+  margin:4px 6px 14px;
+}
 .sidenav a{
-  display:block; text-decoration:none;
-  padding:.5rem .6rem; border-radius:.4rem;
-  border:1px solid transparent; font-weight:600;
-  background:var(--ink); color:#fff; outline:none;
+  display:block;
+  color:#d7dbe0;
+  padding:10px 8px;
+  border:1px solid transparent;
+  border-radius:10px;
+  margin:6px 4px;
+  text-decoration:none;
 }
-.sidenav a:hover{ background:#2a2a2a }
-.sidenav a.active{ background:var(--ink); color:#fff }
-.sidenav a:focus{ outline:2px solid #fff; outline-offset:2px }
+.sidenav a:hover{background:rgba(255,255,255,.04)}
+.sidenav a.active{
+  border-color:#d7dbe0;
+  background:rgba(255,255,255,.02);
+}
+.sidenav .sep{height:1px;margin:10px 6px;background:var(--border)}
 
-/* 右：本文カラム */
 .content{
-  flex:1; height:100vh; overflow-y:auto;
-  display:flex; flex-direction:column;
-  background:var(--bg);
+  padding:20px clamp(14px,3.2vw,24px) 64px;
+  display:block;
+  max-width:calc(var(--maxw) + 2*clamp(14px,3.2vw,24px));
 }
 
-/* ===== 横帯サブナビ ===== */
+/* --- Page article --- */
+.page{max-width:var(--maxw);margin:0 auto}
+h1{font-size:28px;line-height:1.25;margin:6px 0 14px}
+h2{font-size:20px;margin:18px 0 10px}
+.lead{font-size:15.5px;color:var(--text)}
+
+/* --- Card --- */
+.card{
+  background:var(--panel);
+  color:#111;
+  border:1px solid #dce1e6;
+  border-radius:var(--radius);
+  padding:14px 16px;
+  box-shadow:var(--shadow);
+}
+.card + .card{margin-top:12px}
+
+/* --- Subnav (top/About の横帯) --- */
 .subnav{
-  position:sticky; top:0; z-index:20;
-  display:flex; gap:.5rem; align-items:center;
-  padding:.6rem .8rem;
-  background:rgba(255,255,255,.92);
-  backdrop-filter:blur(6px) saturate(1.15);
-  border-bottom:1px solid var(--border);
-  overflow-x:auto; -webkit-overflow-scrolling:touch;
+  display:flex; flex-wrap:wrap;
+  gap:.5rem;
+  margin:10px 0 12px;
 }
 .subnav a{
-  flex:0 0 auto;
-  padding:.45rem .75rem; border-radius:999px;
-  text-decoration:none; font-weight:700;
-  color:#333; background:#fff; border:1px solid #ddd;
-}
-.subnav a:hover{ background:#f6f6f6 }
-.subnav a.active{
-  background:var(--brand-weak);
-  border-color:#bfe0f5;
-  color:var(--brand);
-}
-
-/* ===== 本文 ===== */
-.page{ padding:16px }
-
-/* カード */
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:.8rem;
-  padding:12px 14px;
-  margin:0 0 12px;
+  display:inline-block;
+  padding:.35rem .9rem;
+  border:1px solid #d0d6dc;
+  border-radius:var(--pill);
+  color:#0f1113;
+  background:#fff;
+  text-decoration:none;
   box-shadow:0 1px 0 rgba(0,0,0,.04);
 }
-
-/* B案：タイトルをカード内に */
-.card .page-title{
-  margin:.2rem 0 .8rem;
-  font-size:1.6rem; line-height:1.25;
-}
-.card .lead{
-  margin:0 0 .6rem;
-  font-weight:500; line-height:1.5;
+.subnav a:hover{background:#f8fafc}
+.subnav a.active{
+  color:#fff; background:#2d2f33; border-color:#2d2f33;
 }
 
-/* フッター文言（common.jsが生成） */
-.site-notice{
-  margin:0; padding-left:1.2em; line-height:1.5;
-  font-size:.9rem; color:var(--muted);
+/* --- Footer (notice/copyright) box when inserted via JS --- */
+.site-footer .card{background:var(--panel);color:#111}
+.site-footer .site-notice{margin:0 0 .2rem; font-weight:700}
+
+/* --- Utilities --- */
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* =========================================================
+   Mobile behaviour — collapsible subnav (Top 常時表示)
+   ========================================================= */
+@media (max-width: 768px){
+  :root{ --nav-w:84px }
+
+  .layout{grid-template-columns: var(--nav-w) 1fr}
+  .content{padding:16px 14px 56px}
+
+  .sidenav{padding:16px 10px}
+  .sidenav a{margin:4px 2px;padding:9px 6px}
+
+  /* サブナビを開閉式に */
+  .subnav{
+    position:sticky; top:0; z-index:10;
+    backdrop-filter:saturate(140%) blur(4px);
+  }
+  /* 開閉ボタン（Topピル右側） */
+  .subnav .subnav-caret{
+    margin-left:.45rem;
+    inline-size:1.25rem; block-size:1.25rem;
+    border-radius:999px;
+    border:1px solid #cfd6dc;
+    background:#f3f5f7; color:#1a1d21;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:.82rem; line-height:1;
+  }
+  /* 閉状態：Top 以外隠す */
+  .subnav.is-collapsed a:not(:first-child),
+  .subnav.is-collapsed .subnav-rest{ display:none !important; }
+
+  /* 開状態：並べる */
+  .subnav.is-open{ display:flex; flex-wrap:wrap; gap:.5rem }
 }
 
-/* ===== モバイル ===== */
-@media (max-width:860px){
-  .layout{ display:block }
-  .sidenav{ height:auto; position:relative; min-width:auto; }
-  .sidenav{ display:flex; gap:.5rem; padding:10px; overflow-x:auto }
-  .content{ height:auto }
+/* --- Tiny screens --- */
+@media (max-width:420px){
+  h1{font-size:24px}
 }
