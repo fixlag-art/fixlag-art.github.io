@@ -159,3 +159,43 @@
     run();
   }
 })();
+
+/* === Mobile sidenav toggle (injected) === */
+(function () {
+  // すでに注入済みならスキップ（重複防止）
+  if (window.__navToggleInjected__) return;
+  window.__navToggleInjected__ = true;
+
+  // ボタンとスクリーンを注入
+  const btn = document.createElement('button');
+  btn.className = 'nav-toggle';
+  btn.setAttribute('type', 'button');
+  btn.setAttribute('aria-label', 'Open menu');
+  btn.innerHTML = '<span></span>';
+
+  const scrim = document.createElement('div');
+  scrim.className = 'scrim';
+
+  // DOM に追加（body直下）
+  document.addEventListener('DOMContentLoaded', () => {
+    document.body.appendChild(btn);
+    document.body.appendChild(scrim);
+  });
+
+  // トグル動作
+  function closeNav(){
+    document.body.classList.remove('nav-open');
+    btn.setAttribute('aria-label', 'Open menu');
+  }
+  function toggleNav(){
+    const open = document.body.classList.toggle('nav-open');
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+
+  btn.addEventListener('click', toggleNav);
+  scrim.addEventListener('click', closeNav);
+
+  // 画面幅が広がったら強制クローズ（状態リセット）
+  const mq = window.matchMedia('(min-width: 961px)');
+  mq.addEventListener('change', e => { if (e.matches) closeNav(); });
+})();
