@@ -2,72 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>About | FIXLAG.ART</title>
   <meta name="description" content="About | FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
   <link rel="stylesheet" href="/assets/common.css">
-  <style>
-    /* ===== このページだけ：横帯の配色を入れ替え（未選択=ダーク / アクティブ=ライト） ===== */
-    .subnav a{
-      background:#2d2f33; color:#fff; border:1px solid #2d2f33;
-      transition:background .2s,color .2s,border-color .2s;
-    }
-    .subnav a:hover{ background:#3a3d43; border-color:#3a3d43; }
-    .subnav a:focus, .subnav a:focus-visible{
-      outline:2px solid #cfd9e3; outline-offset:2px;
-    }
-    .subnav a.active{
-      background:#f9f9fa; color:#0f1113; border-color:#d0d6dc;
-    }
-    .subnav a.active:hover{ background:#f2f4f6; }
-  </style>
 </head>
 <body>
-  <div class="layout">
-    <!-- 左の縦帯は design.js がここに描画（ハンバーガー制御含む） -->
-    <div class="sidenav-host"></div>
+<div class="layout">
+  <!-- : 左・共通サイドナビ -->
+  <nav class="sidenav" aria-label="Global">
+    <div class="logo">FIXLAG.ART</div>
+    <a href="/">Nexus</a>
+    <a href="/sonic/">Sonic</a>
+    <a href="/relic/">Relic</a>
+    <a href="/velox/">Velox</a>
+    <a href="/gizmo/">Gizmo</a>
+    <div class="sep"></div>
+  </nav>
 
-    <main class="content">
-      <article class="page">
+  <!-- : 右・本文 -->
+  <main class="content">
 
-        <!-- ===== ページ先頭：タイトル＋リード＋横帯 ===== -->
-        <header class="page-head">
-          <h1>About</h1>
+    <!-- 横帯（最上部） -->
+    <nav class="subnav" aria-label="About sections" data-base="/about/"></nav>
+    <script id="subnav-data" type="application/json">
+      [
+        ["Top", "/"],
+        ["About", "/about/"]
+      ]
+    </script>
 
-          <div class="card" style="margin-bottom:12px">
-            <p class="lead" style="margin:.2rem 0 .6rem;">
-              A personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets — written in a restrained, cordial tone.
-            </p>
-            <p style="margin:.6rem 0;">
-              本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、控えめで丁寧な文体でまとめる個人ポータルです。
-            </p>
-          </div>
+    <!-- タイトル -->
+    <h1>About</h1>
 
-          <!-- 横帯（本文の先頭に sticky）。Top/About の2つだけ -->
-          <nav class="subnav" aria-label="About sections">
-            <a href="/">Top</a>
-            <a href="/about/" class="active">About</a>
-          </nav>
-        </header>
+    <!-- リード（概要） -->
+    <div class="card" style="margin-bottom:12px;">
+      <p class="lead" style="margin:.2rem 0 .6rem;">
+        A personal portal curating live notes, studies on industrial heritage, leisurely drives, and
+        gadgets — written in a restrained, cordial tone.
+      </p>
+      <p style="margin:.6rem 0;">
+        本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を
+        控えめで丁寧な文体でまとめる個人ポータルです。
+      </p>
+    </div>
 
-        <!-- ===== 本文 ===== -->
-        <section class="card" style="margin-top:12px">
-          <h3 style="margin:.2rem 0 .6rem">Contact</h3>
-          <p style="margin:0">
-            E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
-          </p>
-        </section>
+    <!-- 本文セクション -->
+    <article class="page">
+      <div class="card">
+        <h3 style="margin:.2rem 0 .6rem;">Contact</h3>
+        <p style="margin:0;">
+          E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
+        </p>
+      </div>
 
-        <!-- ===== 法的文言フッター：このページは明示的にON ===== -->
-        <footer id="site-footer" class="site-footer" data-notice="on" data-copyright="on"></footer>
+      <!-- フッター（common.js が注入） -->
+      <div id="footer" data-notice="on" data-copyright="on" data-ga="on"></div>
+    </article>
 
-      </article>
-    </main>
-  </div>
+  </main>
+</div>
 
-  <!-- 共通JS（favicon/GA/フッター注入、等） -->
-  <script defer src="/assets/common.js"></script>
-  <!-- 共通UI（縦帯描画・ハンバーガー制御） -->
-  <script defer src="/assets/design.js"></script>
+<!-- scripts -->
+<script defer src="/assets/subnav.js"></script>
+<script defer src="/assets/common.js"></script>
 </body>
 </html>
