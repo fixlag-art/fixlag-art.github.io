@@ -1,15 +1,25 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>About | FIXLAG.ART</title>
-  <meta name="description" content="About | FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
-  <link rel="stylesheet" href="/assets/common.css">
+  <link rel="stylesheet" href="/assets/common.css" />
+  <script defer src="/assets/common.js"></script>
 </head>
 <body>
+
+<!-- 横帯 -->
+<nav class="subnav" data-base="/about/">
+  <button class="hamburger" onclick="toggleSidenav()">☰</button>
+  <a href="/" class="pill">Top</a>
+  <a href="/about/" class="pill active">About</a>
+</nav>
+
+<!-- 全体レイアウト -->
 <div class="layout">
-  <!-- : 左・共通サイドナビ -->
+
+  <!-- 左・縦帯 -->
   <nav class="sidenav" aria-label="Global">
     <div class="logo">FIXLAG.ART</div>
     <a href="/">Nexus</a>
@@ -20,51 +30,40 @@
     <div class="sep"></div>
   </nav>
 
-  <!-- : 右・本文 -->
+  <!-- 本文 -->
   <main class="content">
-
-    <!-- 横帯（最上部） -->
-    <nav class="subnav" aria-label="About sections" data-base="/about/"></nav>
-    <script id="subnav-data" type="application/json">
-      [
-        ["Top", "/"],
-        ["About", "/about/"]
-      ]
-    </script>
-
-    <!-- タイトル -->
-    <h1>About</h1>
-
-    <!-- リード（概要） -->
-    <div class="card" style="margin-bottom:12px;">
-      <p class="lead" style="margin:.2rem 0 .6rem;">
-        A personal portal curating live notes, studies on industrial heritage, leisurely drives, and
-        gadgets — written in a restrained, cordial tone.
-      </p>
-      <p style="margin:.6rem 0;">
-        本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を
-        控えめで丁寧な文体でまとめる個人ポータルです。
-      </p>
-    </div>
-
-    <!-- 本文セクション -->
     <article class="page">
+      <h1>About</h1>
+
       <div class="card">
-        <h3 style="margin:.2rem 0 .6rem;">Contact</h3>
-        <p style="margin:0;">
-          E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
+        <p class="lead">
+          A personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets—written in a restrained, cordial tone.
+        </p>
+        <p>
+          本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、控えめで丁寧な文体でまとめる個人ポータルです。
         </p>
       </div>
 
-      <!-- フッター（common.js が注入） -->
-      <div id="footer" data-notice="on" data-copyright="on" data-ga="on"></div>
-    </article>
+      <div class="card">
+        <h3>Contact</h3>
+        <p>Email: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a></p>
+      </div>
 
+      <div class="card notice">
+        <h3>Notice</h3>
+        <ul>
+          <li>Some pages include affiliate links to Amazon.</li>
+          <li>当サイトはAmazonアソシエイト・プログラムの参加者です。</li>
+          <li>適格販売により収入を得る場合があります。</li>
+        </ul>
+        <p style="margin-top:.5rem; font-size:.9em; color:var(--muted)">
+          © 2025 FIXLAG.ART. All rights reserved.
+        </p>
+      </div>
+    </article>
   </main>
+
 </div>
 
-<!-- scripts -->
-<script defer src="/assets/subnav.js"></script>
-<script defer src="/assets/common.js"></script>
 </body>
 </html>
