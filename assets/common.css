@@ -1,146 +1,27 @@
-:root {
-  --bg: #ffffff;
-  --text: #0f1113;
-  --muted: #6e6e6e;
-  --border: #ddd;
-  --highlight: #2d2f33;
-  --pill-bg: #f9f9fa;
-  --pill-active: #2d2f33;
-  --pill-inactive: #f9f9fa;
-}
-
-body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.layout {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: row;
-}
-
-.sidenav {
-  width: 200px;
-  background: var(--highlight);
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 900;
-}
-
-.sidenav .logo {
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.sidenav a {
-  color: white;
-  margin: 0.25rem 0;
-}
-
-.sidenav .sep {
-  flex-grow: 1;
-}
-
-.content {
-  margin-left: 200px;
-  padding: 1rem 1.5rem;
-  flex-grow: 1;
-}
-
+/* 横帯（subnav） */
 .subnav {
   position: fixed;
   top: 0;
-  left: 200px;
+  left: 0;
   right: 0;
-  background: var(--bg);
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border);
-  z-index: 800;
+  height: 48px;
+  background-color: #fff;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  padding: 0 1rem;
+  z-index: 1000;
+  border-bottom: 1px solid #ddd;
 }
 
-.pill {
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  background: var(--pill-inactive);
-  color: var(--text);
-}
-
-.pill.active {
-  background: var(--pill-active);
-  color: white;
-  border-color: var(--pill-active);
-}
-
-.card {
-  background: #f2f2f2;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-footer {
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-top: 3rem;
-  border-top: 1px solid var(--border);
+/* 縦帯（sidenav） */
+.sidenav {
+  position: fixed;
+  top: 48px; /* 横帯の高さにバンディング */
+  left: 0;
+  width: 220px;
+  height: calc(100% - 48px); /* 横帯の分を引く */
+  background-color: #2d2f33;
+  color: #fff;
   padding-top: 1rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .sidenav {
-    display: none;
-    position: fixed;
-    width: 180px;
-    z-index: 999;
-  }
-
-  .sidenav.open {
-    display: flex;
-  }
-
-  .layout {
-    flex-direction: column;
-  }
-
-  .content {
-    margin-left: 0;
-    padding-top: 3rem;
-  }
-
-  .subnav {
-    left: 0;
-    top: 0;
-    z-index: 1000;
-  }
-
-  .hamburger {
-    display: inline-block;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
-    color: var(--text);
-  }
+  z-index: 999;
 }
