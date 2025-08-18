@@ -1,136 +1,63 @@
-<!doctype html>
-<html lang="ja">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>FIXLAG.ART</title>
-  <link rel="stylesheet" href="/assets/common.css">
-  <style>
-    /* --- Portal: cards grid --- */
-    .cards{ display:grid; gap:14px; grid-template-columns:1fr; }
-    .card-link{
-      display:block; background:#fff; border:1px solid var(--border);
-      border-radius:14px; overflow:hidden; text-decoration:none; color:inherit;
-      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-    }
-    .card-link:hover{
-      transform:translateY(-2px);
-      box-shadow:0 10px 24px rgba(0,0,0,.08);
-      border-color:#dcdcdc;
-    }
-    .card-link .thumb{ aspect-ratio:16/9; width:100%; object-fit:cover; display:block; background:#eee; }
-    .card-link .meta{
-      padding:12px 14px 13px; display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .card-link .title{ font-weight:800; letter-spacing:.2px; }
-    .card-link .tag{
-      font-size:.8rem; padding:.2rem .5rem; border-radius:999px;
-      border:1px solid #e5e5e5; background:#fafafa; color:#333; flex:0 0 auto;
-    }
-    @media (min-width: 860px){ .cards{ grid-template-columns: repeat(4, 1fr); } }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nexus | FIXLAG.ART</title>
+  <meta name="description" content="FIXLAG.ART — a personal portal for live notes, heritage studies, drives, and gadgets.">
+  <link rel="stylesheet" href="/assets/common.css" />
+  <link rel="icon" href="/assets/fixlag_favicons/favicon-32x32.png" sizes="32x32" />
+  <link rel="icon" href="/assets/fixlag_favicons/favicon-192x192.png" sizes="192x192" />
 </head>
 <body>
+
+<!-- サイト全体ラッパー -->
 <div class="layout">
-  <!-- 左：共通サイドナビ -->
-  <nav class="sidenav" aria-label="Global">
+
+  <!-- 横帯（カテゴリナビ） -->
+  <nav class="subnav" aria-label="Category Navigation">
+    <button class="hamburger" onclick="toggleSidenav()">☰</button>
+    <div class="pill-wrap">
+      <a href="/" class="pill active">Nexus</a>
+      <a href="/sonic/" class="pill">Sonic</a>
+      <a href="/relic/" class="pill">Relic</a>
+      <a href="/velox/" class="pill">Velox</a>
+      <a href="/gizmo/" class="pill">Gizmo</a>
+    </div>
+  </nav>
+
+  <!-- 縦帯（小分類ナビ） -->
+  <nav class="sidenav" id="sidenav" aria-label="Section Navigation">
     <div class="logo">FIXLAG.ART</div>
-    <a href="/" class="active">Nexus</a>
-    <a href="/sonic/">Sonic</a>
-    <a href="/relic/">Relic</a>
-    <a href="/velox/">Velox</a>
-    <a href="/gizmo/">Gizmo</a>
+    <a href="/" class="pill active">Top</a>
+    <a href="/about/" class="pill">About</a>
     <div class="sep"></div>
   </nav>
 
-  <!-- 右：本文 -->
+  <!-- 本文エリア -->
   <main class="content">
-    <!-- 横帯：Top / About に統一 -->
-    <nav class="subnav" aria-label="Portal sections" data-base="/"></nav>
-    <script id="subnav-data" type="application/json">
-    [
-      ["Top", "/"],
-      ["About", "/about/"]
-    ]
-    </script>
 
     <article class="page">
-      <h1 style="margin:6px 0 12px">Welcome</h1>
+      <h1 class="title">Nexus</h1>
 
-      <!-- 8枚のカード（すべて同一クラス構造） -->
-      <div class="cards">
+      <p class="lead">
+        A gateway to all categories: Sonic, Relic, Velox, and Gizmo — the four strands of FIXLAG.ART
+      </p>
 
-        <!-- Roses (pink) → Sonic -->
-        <a class="card-link" href="/sonic/">
-          <img class="thumb" src="/images/roses-pink-rose.jpg" alt="Roses — vivid pink rose close-up" loading="lazy" width="1600" height="900">
-          <div class="meta">
-            <div class="title">Roses</div><div class="tag">Sonic</div>
-          </div>
-        </a>
+      <p>
+        すべてのカテゴリへの入口となる「Nexus（中心）」ページです。
+        上のメニューから各カテゴリを選択してご覧いただけます。
+      </p>
 
-        <!-- Hotel (Atami Kaihourou) → Relic -->
-        <a class="card-link" href="/relic/">
-          <img class="thumb" src="/images/hotel-atami-kaihourou.jpg" alt="Hotel — glass interior with ocean view at dusk" loading="lazy" width="1600" height="900">
-          <div class="meta">
-            <div class="title">Hotel</div><div class="tag">Relic</div>
-          </div>
-        </a>
+      <!-- ここに写真やリンク付きカードなど、自由に展開可能です -->
 
-        <!-- Velox (portrait) → Velox -->
-        <a class="card-link" href="/velox/">
-          <img class="thumb" src="/images/velox-legacy-b4-portrait.jpg" alt="Velox — black sedan in portrait crop by brick wall" loading="lazy" width="1200" height="1600">
-          <div class="meta">
-            <div class="title">Velox</div><div class="tag">Velox</div>
-          </div>
-        </a>
-
-        <!-- Billboard (stage) → Sonic -->
-        <a class="card-link" href="/sonic/">
-          <img class="thumb" src="/images/sonic-billboard-stage.jpg" alt="Billboard — stage at Billboard Live Tokyo before performance" loading="lazy" width="1600" height="900">
-          <div class="meta">
-            <div class="title">Billboard</div><div class="tag">Sonic</div>
-          </div>
-        </a>
-
-        <!-- Billboard (window) → Sonic -->
-        <a class="card-link" href="/sonic/">
-          <img class="thumb" src="/images/sonic-billboard-window.jpg" alt="Billboard — cityscape through the large window at the venue" loading="lazy" width="1600" height="900">
-          <div class="meta">
-            <div class="title">Window</div><div class="tag">Sonic</div>
-          </div>
-        </a>
-
-        <!-- Roses (purple) → Sonic -->
-        <a class="card-link" href="/sonic/">
-          <img class="thumb" src="/images/roses-purple-rose.jpg" alt="Roses — deep purple rose macro" loading="lazy" width="1600" height="900">
-          <div class="meta">
-            <div class="title">Roses</div><div class="tag">Sonic</div>
-          </div>
-        </a>
-
-        <!-- Glass Forest → Sonic -->
-        <a class="card-link" href="/sonic/">
-          <img class="thumb" src="/images/sonic-glass-forest.jpg" alt="Glass Forest — reflective glass and lights" loading="lazy" width="1600" height="900">
-          <div class="meta">
-            <div class="title">Glass Forest</div><div class="tag">Sonic</div>
-          </div>
-        </a>
-
-        <!-- Velox (landscape) → Velox -->
-        <a class="card-link" href="/velox/">
-          <img class="thumb" src="/images/velox-legacy-b4.jpg" alt="Velox — black sedan in landscape crop by brick wall" loading="lazy" width="1600" height="900">
-          <div class="meta">
-            <div class="title">Legacy B4</div><div class="tag">Velox</div>
-          </div>
-        </a>
-
-      </div>
     </article>
 
-    <!-- スクリプト（横帯→先、共通→後） -->
-    <script src="/assets/subnav.js" defer></script>
-    <script src="/assets/common.js" defer></script>
   </main>
 </div>
+
+<!-- JS: 共通動作 -->
+<script src="/assets/common.js" defer></script>
+
 </body>
 </html>
