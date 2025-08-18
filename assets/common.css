@@ -1,260 +1,256 @@
-/* =========================
-   FIXLAG.ART — common.css
-   ========================= */
+/* =========================================
+   FIXLAG.ART  共通スタイル  (2025-08-18)
+   - ダーク基調 / 変数
+   - レイアウト: サイドナビ / コンテンツ
+   - サブナブ（横帯）
+   - カード / ページ見出し
+   - フッター（法的文言）
+   - ハンバーガー＝オフキャンバス実装
+   ========================================= */
 
-/* --- CSS Variables --- */
+/* ---------- CSS Variables ---------- */
 :root{
-  --bg:#0f1113;
-  --panel:#f4f5f6;
-  --panel-weak:#eef0f2;
-  --text:#e8eaed;
-  --muted:#a8b0b7;
-  --link:#78b3e8;
-  --border:#2d3238;
-  --accent:#4ea3c7;
-  --accent-ink:#0a2a34;
-
-  --radius:12px;
-  --pill:999px;
-
-  --nav-w:96px;
-  --maxw:980px;
-
-  --gap:16px;
-  --pad:14px;
-  --shadow:0 1px 0 rgba(255,255,255,.06) inset, 0 8px 24px rgba(0,0,0,.25);
+  --bg: #0f1215;
+  --panel: #171a1f;
+  --panel-2: #1e232a;
+  --text: #e6ebf0;
+  --muted: #9aa6b2;
+  --line: #2b323b;
+  --brand: #2b6c84;
+  --accent: #3aa2cc;
+  --pill-bg: #1d232a;
+  --pill-on: #e8f2f7;
+  --pill-on-text: #0f2a35;
+  --shadow: 0 6px 20px rgba(0,0,0,.35);
+  --radius: 12px;
+  --radius-lg: 14px;
+  --nav-w: 112px;       /* デスクトップの縦帯幅 */
+  --z-scrim: 1100;
+  --z-sidenav: 1110;    /* 縦帯 > スクラム */
+  --z-subnav: 100;      /* 横帯（本文上） */
 }
 
-/* --- Base --- */
-*{box-sizing:border-box}
-html,body{height:100%}
-html{scroll-behavior:smooth}
+/* ---------- Reset / Base ---------- */
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
+html{ color-scheme: dark; }
 body{
   margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI","Meiryo",sans-serif;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
+  font: 15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Hiragino Sans","Noto Sans JP","Noto Sans CJK JP",Meiryo,sans-serif;
+  background: var(--bg);
+  color: var(--text);
 }
-img{max-width:100%;height:auto;display:block}
-a{color:var(--link);text-decoration:none}
-a:hover{text-decoration:underline}
 
-/* --- Layout --- */
+/* ---------- Layout ---------- */
 .layout{
-  display:grid;
-  grid-template-columns: var(--nav-w) 1fr;
-  min-height:100%;
+  display:flex;
+  min-height:100dvh;
 }
+
+/* --- Side Nav (desktop base) --- */
 .sidenav{
-  position:sticky; top:0;
-  height:100vh;
-  padding:18px 12px;
-  border-right:1px solid var(--border);
-  background:linear-gradient(180deg,#121518 0%,#0f1113 100%);
+  width: var(--nav-w);
+  flex: 0 0 var(--nav-w);
+  background: linear-gradient(180deg, #0f1418, #0d1115);
+  border-right: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  padding: 20px 14px;
 }
+
 .sidenav .logo{
-  color:#fff; font-weight:800; letter-spacing:.5px;
-  margin:4px 6px 14px;
+  font-weight: 800;
+  letter-spacing: .4px;
+  margin: 2px 4px 16px;
 }
+
 .sidenav a{
   display:block;
-  color:#d7dbe0;
-  padding:10px 8px;
-  border:1px solid transparent;
-  border-radius:10px;
-  margin:6px 4px;
-  text-decoration:none;
+  padding: 12px 10px;
+  margin: 2px 0;
+  border-radius: 10px;
+  color: var(--text);
+  text-decoration: none;
+  transition: background .15s ease, color .15s ease;
 }
-.sidenav a:hover{background:rgba(255,255,255,.04)}
-.sidenav a.active{
-  border-color:#d7dbe0;
-  background:rgba(255,255,255,.02);
-}
-.sidenav .sep{height:1px;margin:10px 6px;background:var(--border)}
+.sidenav a:hover{ background: #1a2128; }
+.sidenav a.active{ background: #22313a; outline:1px solid #2f4955; }
 
+.sidenav .sep{
+  height:1px; margin: 12px 2px; background: var(--line);
+}
+
+/* --- Content --- */
 .content{
-  padding:20px clamp(14px,3.2vw,24px) 64px;
-  display:block;
-  max-width:calc(var(--maxw) + 2*clamp(14px,3.2vw,24px));
+  flex:1;
+  min-width:0;
+  padding: 18px 18px 32px;
 }
 
-/* --- Page article --- */
-.page{max-width:var(--maxw);margin:0 auto}
-h1{font-size:28px;line-height:1.25;margin:6px 0 14px}
-h2{font-size:20px;margin:18px 0 10px}
-.lead{font-size:15.5px;color:var(--text)}
+/* コンテナ幅 */
+.page{ max-width: 980px; margin: 0 auto; }
 
-/* --- Card --- */
+/* ---------- Page header ---------- */
+.page h1{
+  font-size: 28px;
+  margin: 6px 0 12px;
+  letter-spacing:.2px;
+}
+
+/* リード（導入文） */
+.lead{
+  font-size: 16px;
+  color: var(--text);
+}
+
+/* ---------- Card ---------- */
 .card{
-  background:var(--panel);
-  color:#111;
-  border:1px solid #dce1e6;
-  border-radius:var(--radius);
-  padding:14px 16px;
-  box-shadow:var(--shadow);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  box-shadow: var(--shadow);
 }
-.card + .card{margin-top:12px}
 
-/* --- Subnav (top/About の横帯) --- */
+/* ---------- Subnav (横帯) ---------- */
 .subnav{
-  display:flex; flex-wrap:wrap;
-  gap:.5rem;
-  margin:10px 0 12px;
+  position: sticky;
+  top: 0; /* ナビの下に固定 */
+  z-index: var(--z-subnav);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 8px 0 10px;
 }
+
 .subnav a{
-  display:inline-block;
-  padding:.35rem .9rem;
-  border:1px solid #d0d6dc;
-  border-radius:var(--pill);
-  color:#0f1113;
-  background:#fff;
-  text-decoration:none;
-  box-shadow:0 1px 0 rgba(0,0,0,.04);
+  display: inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 6px 12px;
+  margin-right: 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--pill-bg);
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background .15s ease, color .15s ease, border-color .15s ease;
 }
-.subnav a:hover{background:#f8fafc}
+.subnav a:hover{
+  background: #232a33;
+  border-color: #364351;
+}
 .subnav a.active{
-  color:#fff; background:#2d2f33; border-color:#2d2f33;
+  background: var(--pill-on);
+  color: var(--pill-on-text);
+  border-color: #bcd8e6;
 }
 
-/* --- Footer (notice/copyright) box when inserted via JS --- */
-.site-footer .card{background:var(--panel);color:#111}
-.site-footer .site-notice{margin:0 0 .2rem; font-weight:700}
+/* ---------- Footer (legal) ---------- */
+.site-footer{
+  background: var(--panel);
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-top: 16px;
+}
+.site-footer ul{
+  margin: 0 0 8px 0;
+  padding-left: 1.25rem;
+}
+.site-footer li{ margin:.2rem 0; }
+.site-footer p{ margin:.5rem 0 0; color: var(--muted); font-size: .95rem; }
 
-/* --- Utilities --- */
-.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+/* ---------- Pills / Small UI ---------- */
+.button-pill{
+  display:inline-flex; align-items:center;
+  gap:6px; padding:6px 12px;
+  background: var(--pill-bg);
+  border:1px solid var(--line);
+  color: var(--text);
+  text-decoration:none;
+  border-radius:999px;
+}
+.button-pill.active{ background: var(--pill-on); color: var(--pill-on-text); border-color:#bcd8e6; }
 
 /* =========================================================
-   Mobile behaviour — collapsible subnav (Top 常時表示)
+   Drawer (Hamburger) — mobile / narrow width
+   - body に .is-drawer-open を付与して開閉（design.js）
+   - オーバーレイ .sidenav-overlay は body 直下
+   - 移動: transform でスライド
+   - z-index の序列: overlay(1100) < sidenav(1110)
    ========================================================= */
-@media (max-width: 768px){
-  :root{ --nav-w:84px }
-
-  .layout{grid-template-columns: var(--nav-w) 1fr}
-  .content{padding:16px 14px 56px}
-
-  .sidenav{padding:16px 10px}
-  .sidenav a{margin:4px 2px;padding:9px 6px}
-
-  /* サブナビを開閉式に */
-  .subnav{
-    position:sticky; top:0; z-index:10;
-    backdrop-filter:saturate(140%) blur(4px);
-  }
-  /* 開閉ボタン（Topピル右側） */
-  .subnav .subnav-caret{
-    margin-left:.45rem;
-    inline-size:1.25rem; block-size:1.25rem;
-    border-radius:999px;
-    border:1px solid #cfd6dc;
-    background:#f3f5f7; color:#1a1d21;
-    display:inline-flex; align-items:center; justify-content:center;
-    font-size:.82rem; line-height:1;
-  }
-  /* 閉状態：Top 以外隠す */
-  .subnav.is-collapsed a:not(:first-child),
-  .subnav.is-collapsed .subnav-rest{ display:none !important; }
-
-  /* 開状態：並べる */
-  .subnav.is-open{ display:flex; flex-wrap:wrap; gap:.5rem }
-}
-
-/* --- Tiny screens --- */
-@media (max-width:420px){
-  h1{font-size:24px}
-}
-
-/* === Mobile collapsible sidenav === */
-/* デスクトップ既定（そのまま） */
-.sidenav { width: 220px; }
-.content { margin-left: 220px; }
-
-/* モバイル：縦帯をデフォルト非表示、トグルで表示 */
-@media (max-width: 960px) {
-  .sidenav{
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    width: 220px;
-    transform: translateX(-100%);
-    transition: transform .25s ease;
-    z-index: 1000;
-    background: var(--bg, #111);
-    box-shadow: 2px 0 16px rgb(0 0 0 / .3);
-  }
-  body.nav-open .sidenav{ transform: translateX(0); }
-
-  /* コンテンツは全幅に */
-  .content{ margin-left: 0; }
-
-  /* ハンバーガーボタン */
-  .nav-toggle{
-    position: fixed;
-    left: 12px; top: 12px;
-    width: 40px; height: 40px;
-    border-radius: 999px;
-    border: 1px solid rgb(255 255 255 / .2);
-    background: rgb(255 255 255 / .06);
-    backdrop-filter: blur(8px);
-    color: #fff;
-    z-index: 1100;
-    display: grid;
-    place-items: center;
-  }
-  .nav-toggle span,
-  .nav-toggle span::before,
-  .nav-toggle span::after{
-    display: block;
-    width: 18px; height: 2px; background: currentColor;
-    content: ""; position: relative;
-  }
-  .nav-toggle span::before{ position:absolute; transform: translateY(-6px); }
-  .nav-toggle span::after { position:absolute; transform: translateY( 6px); }
-
-  /* スクリーン用オーバーレイ */
-  .scrim{
-    position: fixed; inset: 0; z-index: 1050;
-    background: rgb(0 0 0 / .5);
-    opacity: 0; pointer-events: none;
-    transition: opacity .2s ease;
-  }
-  body.nav-open .scrim{ opacity: 1; pointer-events: auto; }
-}
-
-/* デスクトップではトグル・スクリーンを隠す */
-@media (min-width: 961px){
-  .nav-toggle, .scrim{ display: none !important; }
-}
-
-/* ---- Drawer layering fix ---- */
-:root{
-  --z-sidenav: 1100;   /* サイドナビ本体（最前面） */
-  --z-scrim:   1090;   /* 画面を覆うスクリーン（その後ろ） */
-}
-
-/* サイドナビ（既存の .sidenav に追加） */
-.sidenav{
+.nav-toggle{
+  position: fixed;
+  top: 12px; left: 12px;
   z-index: var(--z-sidenav);
+  width: 36px; height: 36px;
+  border-radius: 999px;
+  display: none; /* デスクトップでは隠す */
+  align-items:center; justify-content:center;
+  background: #12161a;
+  border: 1px solid var(--line);
+  color: var(--text);
 }
 
-/* オーバーレイ（スクリーン）。クラス名は現在のものに合わせてください */
-.sidenav-overlay,
-.sidenav__scrim,
-.nav-scrim{
+.sidenav-overlay{
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,.35);
+  background: rgba(0,0,0,.45);
   z-index: var(--z-scrim);
-  display: none;             /* デフォルト非表示 */
-  pointer-events: auto;      /* クリックで閉じられる */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
 }
 
-/* 開いたときだけ表示（開閉時に body に .nav-open を付けている想定） */
-body.nav-open .sidenav-overlay,
-body.nav-open .sidenav__scrim,
-body.nav-open .nav-scrim{
-  display: block;
+/* モバイル：縦帯をオフキャンバス化 */
+@media (max-width: 960px){
+  .nav-toggle{ display:inline-flex; }
+
+  .sidenav{
+    position: fixed !important;
+    left: 0; top: 0;
+    height: 100dvh;
+    transform: translateX(-100%);
+    transition: transform .22s ease;
+    z-index: var(--z-sidenav) !important; /* クリック可能を保証 */
+  }
+
+  body.is-drawer-open .sidenav{
+    transform: translateX(0);
+  }
+
+  /* オーバーレイの出現 */
+  body.is-drawer-open .sidenav-overlay{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* コンテンツ余白（縦帯が fixed になるのでナチュラルに全幅） */
+  .content{ padding: 58px 14px 28px; }
+
+  /* ロゴ行揃え */
+  .sidenav .logo{ margin-left: 6px; }
+
+  /* サブナブ圧縮 */
+  .subnav{ padding: 8px 0; }
+  .page{ max-width: 720px; }
 }
 
-/* 念のため本文を一段下げて、重なり順の競合を防止 */
-.content{ position: relative; z-index: 1; }
+/* ---------- Links / misc ---------- */
+a{ color: #9bd0ea; }
+a:hover{ color: #c2e6f7; }
+
+/* ---------- Prefers reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Helper (debug) ---------- */
+/* .debug-outline *{ outline:1px solid #f0f; } */
