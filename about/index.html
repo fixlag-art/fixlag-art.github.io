@@ -6,16 +6,31 @@
   <title>About | FIXLAG.ART</title>
   <meta name="description" content="About | FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
   <link rel="stylesheet" href="/assets/common.css">
+  <style>
+    /* ===== このページだけ：横帯の配色を入れ替え（未選択=ダーク / アクティブ=ライト） ===== */
+    .subnav a{
+      background:#2d2f33; color:#fff; border:1px solid #2d2f33;
+      transition:background .2s,color .2s,border-color .2s;
+    }
+    .subnav a:hover{ background:#3a3d43; border-color:#3a3d43; }
+    .subnav a:focus, .subnav a:focus-visible{
+      outline:2px solid #cfd9e3; outline-offset:2px;
+    }
+    .subnav a.active{
+      background:#f9f9fa; color:#0f1113; border-color:#d0d6dc;
+    }
+    .subnav a.active:hover{ background:#f2f4f6; }
+  </style>
 </head>
 <body>
   <div class="layout">
-    <!-- 左の縦帯は design.js がここに描画 -->
+    <!-- 左の縦帯は design.js がここに描画（ハンバーガー制御含む） -->
     <div class="sidenav-host"></div>
 
     <main class="content">
       <article class="page">
 
-        <!-- ===== ページ先頭（タイトル＋リード＋横帯） ===== -->
+        <!-- ===== ページ先頭：タイトル＋リード＋横帯 ===== -->
         <header class="page-head">
           <h1>About</h1>
 
@@ -28,8 +43,8 @@
             </p>
           </div>
 
-          <!-- 横帯：ページヘッダ直下に密着表示 -->
-          <nav class="subnav" aria-label="About sections" data-base="/about/">
+          <!-- 横帯（本文の先頭に sticky）。Top/About の2つだけ -->
+          <nav class="subnav" aria-label="About sections">
             <a href="/">Top</a>
             <a href="/about/" class="active">About</a>
           </nav>
@@ -43,17 +58,16 @@
           </p>
         </section>
 
-        <!-- ===== フッター（明示 ON/OFF） =====
-             data-notice / data-copyright で個別に制御 -->
+        <!-- ===== 法的文言フッター：このページは明示的にON ===== -->
         <footer id="site-footer" class="site-footer" data-notice="on" data-copyright="on"></footer>
 
       </article>
     </main>
   </div>
 
-  <!-- 共通JS：GA・faviconなど -->
+  <!-- 共通JS（favicon/GA/フッター注入、等） -->
   <script defer src="/assets/common.js"></script>
-  <!-- 共通UI：縦帯の描画・ハンバーガー制御等（重複は避ける実装想定） -->
+  <!-- 共通UI（縦帯描画・ハンバーガー制御） -->
   <script defer src="/assets/design.js"></script>
 </body>
 </html>
