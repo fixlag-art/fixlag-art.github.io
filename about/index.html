@@ -4,37 +4,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>About | FIXLAG.ART</title>
+  <meta name="description" content="About | FIXLAG.ART — a personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets.">
   <link rel="stylesheet" href="/assets/common.css">
 </head>
 <body>
   <div class="layout">
-    <div class="sidenav-host"></div>   <!-- ← design.js が中身を描画 -->
+    <!-- 左の縦帯は design.js がここに描画 -->
+    <div class="sidenav-host"></div>
+
     <main class="content">
+      <article class="page">
 
-      <!-- ページ本文（必要なら） -->
-      <div class="card" style="margin-bottom:12px">
-        <h3 style="margin:.2rem 0 .6rem">Contact</h3>
-        <p style="margin:0">E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a></p>
-      </div>
+        <!-- ===== ページ先頭（タイトル＋リード＋横帯） ===== -->
+        <header class="page-head">
+          <h1>About</h1>
 
-      <!-- フッターは design.js が自動追加 -->
+          <div class="card" style="margin-bottom:12px">
+            <p class="lead" style="margin:.2rem 0 .6rem;">
+              A personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets — written in a restrained, cordial tone.
+            </p>
+            <p style="margin:.6rem 0;">
+              本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、控えめで丁寧な文体でまとめる個人ポータルです。
+            </p>
+          </div>
+
+          <!-- 横帯：ページヘッダ直下に密着表示 -->
+          <nav class="subnav" aria-label="About sections" data-base="/about/">
+            <a href="/">Top</a>
+            <a href="/about/" class="active">About</a>
+          </nav>
+        </header>
+
+        <!-- ===== 本文 ===== -->
+        <section class="card" style="margin-top:12px">
+          <h3 style="margin:.2rem 0 .6rem">Contact</h3>
+          <p style="margin:0">
+            E-mail: <a href="mailto:receipt.desk@fixlag.org">receipt.desk@fixlag.org</a>
+          </p>
+        </section>
+
+        <!-- ===== フッター（明示 ON/OFF） =====
+             data-notice / data-copyright で個別に制御 -->
+        <footer id="site-footer" class="site-footer" data-notice="on" data-copyright="on"></footer>
+
+      </article>
     </main>
   </div>
 
-  <!-- ページ設定（タイトル/リード/横帯/フッターON/OFF） -->
-  <script id="page-data" type="application/json">
-  {
-    "title": "About",
-    "lead_en": "A personal portal curating live notes, studies on industrial heritage, leisurely drives, and gadgets — written in a restrained, cordial tone.",
-    "lead_ja": "本サイトは、書きつけメモ・産業遺構の研究・ドライブ・ガジェットの記録を、控えめで丁寧な文体でまとめる個人ポータルです。",
-    "base": "/about/",
-    "subnav": [["Top","/"],["About","/about/"]],
-    "footer": { "notice": "on", "copyright": "on" }
-  }
-  </script>
-
-  <script defer src="/assets/subnav.js"></script>  <!-- 既存でOK（必要なら） -->
-  <script defer src="/assets/common.js"></script>  <!-- GA・favicon等 -->
-  <script defer src="/assets/design.js"></script>  <!-- ★ 新規：共通UI -->
+  <!-- 共通JS：GA・faviconなど -->
+  <script defer src="/assets/common.js"></script>
+  <!-- 共通UI：縦帯の描画・ハンバーガー制御等（重複は避ける実装想定） -->
+  <script defer src="/assets/design.js"></script>
 </body>
 </html>
