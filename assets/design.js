@@ -151,3 +151,74 @@
     boot();
   }
 })();
+
+(function () {
+  /**
+   * モバイルでサブナビを開閉式にする
+   * - nav.subnav があれば自動適用
+   * - data-collapsible="off" が付いている場合は無効
+   */
+  function setupMobileSubnav() {
+    const nav = document.querySelector('.subnav');
+    if (!nav) return;
+    if (nav.getAttribute('data-collapsible') === 'off') return;
+
+    const isMobile = () => window.matchMedia('(max-width: 768px)').matches;
+
+    // 初期化は1回だけ
+    if (nav.dataset.enhanced === '1') return;
+    nav.dataset.enhanced = '1';
+
+    // 最初のリンク（= Top 想定）
+    const firstLink = nav.querySelector('a');
+    if (!firstLink) return;
+
+    // 既に caret 済みならスキップ
+    if (!firstLink.querySelector('.subnav-caret')) {
+      // ▼/▲ の開閉ボタンを Top ピルの右に追加（押すと開閉、Top ラベル自体は遷移）
+      const caret = document.createElement('button');
+      caret.type = 'button';
+      caret.className = 'subnav-caret';
+      caret.setAttribute('aria-expanded', 'false');
+      caret.title = 'Show/Hide';
+      caret.textContent = '▾';
+      firstLink.appendChild(caret);
+
+      caret.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const open = nav.classList.toggle('is-open');
+        nav.classList.toggle('is-collapsed', !open);
+        caret.setAttribute('aria-expanded', String(open));
+        caret.textContent = open ? '▴' : '▾';
+      });
+    }
+
+    // モバイル初期状態：閉じる
+    function applyState() {
+      if (isMobile()) {
+        nav.classList.add('is-collapsed');
+        nav.classList.remove('is-open');
+        const caret = nav.querySelector('.subnav-caret');
+        if (caret) {
+          caret.setAttribute('aria-expanded', 'false');
+          caret.textContent = '▾';
+        }
+      } else {
+        // PC は常に展開
+        nav.classList.remove('is-collapsed');
+        nav.classList.remove('is-open');
+      }
+    }
+
+    applyState();
+    window.addEventListener('resize', applyState);
+  }
+
+  // DOM 準備後に実行
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileSubnav);
+  } else {
+    setupMobileSubnav();
+  }
+})();
